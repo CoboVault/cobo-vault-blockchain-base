@@ -48,7 +48,7 @@ export function decodeSegwitAddress(hrp: string, addr: string) {
 }
 
 export function encodeSegwitAddress(hrp, version, program) {
-    const ret = bech32.encode(hrp, [version].concat(convertbits(program, 8, 5, true), Bech32Version.Origin));
+    const ret = bech32.encode(hrp, [version].concat(convertbits(program, 8, 5, true)), Bech32Version.Origin);
     if (decodeSegwitAddress(hrp, ret) === null) {
         return null;
     }
