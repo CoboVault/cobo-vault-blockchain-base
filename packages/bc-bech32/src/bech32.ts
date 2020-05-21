@@ -3,18 +3,18 @@ import { Bech32Version } from './index';
 const CHARSET = 'qpzry9x8gf2tvdw0s3jn54khce6mua7l';
 const GENERATOR = [0x3b6a57b2, 0x26508e6d, 0x1ea119fa, 0x3d4233dd, 0x2a1462b3];
 
-function polymod(values: number[]) {
+function polymod(values: number[]): number {
     let chk = 1;
     for (let p = 0; p < values.length; ++p) {
         const top = chk >> 25;
         chk = ((chk & 0x1ffffff) << 5) ^ values[p];
-        for (let i = 0; i < 5; ++i) {
+        for (let i = 0; i < 6; ++i) {
             if ((top >> i) & 1) {
                 chk ^= GENERATOR[i];
             }
         }
-        return chk;
     }
+    return chk;
 }
 
 function hrpExpand(hrp: string) {
@@ -49,9 +49,12 @@ function createChecksum(hrp: string | undefined, data: number[], bech32Version: 
         values = [0].concat(data).concat([0, 0, 0, 0, 0, 0]);
     }
 
+    console.log('-----', polymod(values));
+
     const chk = bech32Version === Bech32Version.Origin ? 1 : 0x3fffffff;
 
-    const mod = polymod(values) ^ chk;
+    const mod = polymod(values) ^ 0x3fffffff;
+    console.log(mod);
     const ret = [];
     for (let p = 0; p < 6; ++p) {
         ret.push((mod >> (5 * (5 - p))) & 31);
