@@ -49,11 +49,9 @@ function createChecksum(hrp: string | undefined, data: number[], bech32Version: 
         values = [0].concat(data).concat([0, 0, 0, 0, 0, 0]);
     }
 
-    console.log('-----', polymod(values));
-
     const chk = bech32Version === Bech32Version.Origin ? 1 : 0x3fffffff;
 
-    const mod = polymod(values) ^ 0x3fffffff;
+    const mod = polymod(values) ^ chk;
     console.log(mod);
     const ret = [];
     for (let p = 0; p < 6; ++p) {

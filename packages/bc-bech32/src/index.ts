@@ -64,7 +64,8 @@ export function encodeBc32Data(hex: string): string {
 export function decodeBc32Data(data: string): null | string {
     const result = bech32.decode(data);
     if (result) {
-        return Buffer.from(result.data).toString('hex');
+        const res = convertbits(Buffer.from(result.data), 5 ,8, false);
+        return Buffer.from(res).toString('hex')
     } else {
         return null;
     }
