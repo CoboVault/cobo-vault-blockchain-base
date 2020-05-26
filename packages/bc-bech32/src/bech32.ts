@@ -52,7 +52,6 @@ function createChecksum(hrp: string | undefined, data: number[], bech32Version: 
     const chk = bech32Version === Bech32Version.Origin ? 1 : 0x3fffffff;
 
     const mod = polymod(values) ^ chk;
-    console.log(mod);
     const ret = [];
     for (let p = 0; p < 6; ++p) {
         ret.push((mod >> (5 * (5 - p))) & 31);
