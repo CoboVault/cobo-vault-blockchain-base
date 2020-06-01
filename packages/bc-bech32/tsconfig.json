@@ -4,8 +4,11 @@
       "esModuleInterop": true,
       "target": "es5",
       "moduleResolution": "node",
-      "sourceMap": true
+      "sourceMap": true,
+      "declaration": true
     },
     "lib": ["es2015"],
-    "exclude": ["test"]
+    "exclude": [
+      "test"
+    ]
 }
