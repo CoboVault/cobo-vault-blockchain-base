@@ -1,10 +1,14 @@
 {
   "name": "bc-bech32",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf ./dist",
     "build": "npm run clean && npx tsc -p tsconfig.json -outDir ./dist"
-  }
+  },
+  "files": [
+    "src",
+    "dist"
+  ]
 }
