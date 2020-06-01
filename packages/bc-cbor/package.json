@@ -18,6 +18,8 @@
     "url": "git+https://github.com/CoboVault/cobo-vault-blockchain-base.git"
   },
   "scripts": {
+    "clean": "rm -rf ./dist",
+    "build": "npm run clean && npx tsc -p tsconfig.json -outDir ./dist",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {

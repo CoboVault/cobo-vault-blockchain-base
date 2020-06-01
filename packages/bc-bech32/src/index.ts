@@ -5,7 +5,7 @@ export enum Bech32Version {
     bis = 2,
 }
 
-const convertBits = (data: Uint8Array, fromBits: number, toBits: number, pad: boolean): number[] => {
+const convertBits = (data: Uint8Array | number[], fromBits: number, toBits: number, pad: boolean): number[] => {
     let acc = 0;
     let bits = 0;
     const ret = [];
@@ -47,7 +47,7 @@ export const decodeSegwitAddress = (hrp: string, addr: string): { version: numbe
     return { version: dec.data[0], program: res };
 };
 
-export const encodeSegwitAddress = (hrp: string, version: number, program: Uint8Array): string | null => {
+export const encodeSegwitAddress = (hrp: string, version: number, program: Uint8Array | number[]): string | null => {
     const ret = bech32.encode(hrp, [version].concat(convertBits(program, 8, 5, true)), Bech32Version.Origin);
     if (decodeSegwitAddress(hrp, ret) === null) {
         return null;
