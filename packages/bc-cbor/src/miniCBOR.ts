@@ -1,6 +1,4 @@
-import { BULLET } from 'jest-config/build/utils';
-
-/* 
+/*
     this an simple cbor implementation which is just using
     on BCR-05
 */

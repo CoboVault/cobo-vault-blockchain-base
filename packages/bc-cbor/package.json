@@ -5,13 +5,13 @@
   "author": "aaronisme <aarondongchen@gmail.com>",
   "homepage": "https://github.com/CoboVault/cobo-vault-blockchain-base#readme",
   "license": "MIT",
-  "main": "lib/bc-ur.js",
+  "main": "src/bc-cbor.js",
   "directories": {
-    "lib": "lib",
+    "lib": "src",
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "src"
   ],
   "repository": {
     "type": "git",

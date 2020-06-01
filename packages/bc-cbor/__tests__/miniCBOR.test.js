@@ -1,4 +1,4 @@
-import {encodeSimpleCBOR, decodeSimpleCBOR, composeHeader} from '../lib/miniCBOR';
+import {encodeSimpleCBOR, decodeSimpleCBOR, composeHeader} from '../src/miniCBOR';
 
 describe('encode cbor', () => {
     it('should encode cbor data when below 24 bytes', () => {
