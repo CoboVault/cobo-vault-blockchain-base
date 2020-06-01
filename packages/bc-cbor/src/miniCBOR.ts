@@ -1,30 +1,15 @@
-import { BULLET } from 'jest-config/build/utils';
-
-/* 
+/*
     this an simple cbor implementation which is just using
     on BCR-05
 */
-export const encodeSimpleCBOR = (data: string) => {
-    const bufferData = Buffer.from(data, 'hex');
-    if (bufferData.length <= 0 || bufferData.length >= 2 ** 32) {
-        throw new Error('data is too large');
-    }
-
-    const header = composeHeader(bufferData.length);
-
-    const endcoded = Buffer.concat([header, bufferData]);
-    return endcoded.toString('hex');
-};
-
-
-export const composeHeader = (length:number) => {
+export const composeHeader = (length: number) => {
     let header: Buffer;
     if (length > 0 && length <= 23) {
         header = Buffer.from([0x40 + length]);
     }
     if (length >= 24 && length <= 255) {
         const headerLength = Buffer.alloc(1);
-        headerLength.writeUInt8(length)
+        headerLength.writeUInt8(length);
         header = Buffer.concat([Buffer.from([0x58]), headerLength]);
     }
 
@@ -39,8 +24,20 @@ export const composeHeader = (length:number) => {
         headerLength.writeUInt32BE(length);
         header = Buffer.concat([Buffer.from([0x60]), headerLength]);
     }
-    return header
-}
+    return header;
+};
+
+export const encodeSimpleCBOR = (data: string) => {
+    const bufferData = Buffer.from(data, 'hex');
+    if (bufferData.length <= 0 || bufferData.length >= 2 ** 32) {
+        throw new Error('data is too large');
+    }
+
+    const header = composeHeader(bufferData.length);
+
+    const endcoded = Buffer.concat([header, bufferData]);
+    return endcoded.toString('hex');
+};
 
 export const decodeSimpleCBOR = (data: string) => {
     const dataBuffer = Buffer.from(data, 'hex');
@@ -55,7 +52,7 @@ export const decodeSimpleCBOR = (data: string) => {
     }
 
     if (header == 0x58) {
-        const dataLength = dataBuffer.slice(1,2).readUInt8();
+        const dataLength = dataBuffer.slice(1, 2).readUInt8();
         return dataBuffer.slice(2, 2 + dataLength).toString('hex');
     }
 
