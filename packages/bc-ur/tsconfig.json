@@ -8,5 +8,5 @@
       "declaration": true
     },
     "lib": ["es2015"],
-    "exclude": ["test"]
+    "exclude": ["__tests__"]
   }
