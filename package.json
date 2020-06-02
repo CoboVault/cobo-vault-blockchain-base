@@ -19,5 +19,8 @@
     "lerna": "^3.21.0",
     "prettier": "^2.0.5",
     "typescript": "^3.9.3"
+  },
+  "dependencies": {
+    "bc-bech32": "file:packages/bc-bech32"
   }
 }
