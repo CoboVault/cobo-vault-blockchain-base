@@ -1,6 +1,6 @@
 {
   "name": "@opencryptolab/bc-bech32",
-  "version": "1.0.1-alpha.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
