@@ -1,5 +1,5 @@
 {
-  "name": "bc-ur",
+  "name": "@opencryptolab/bc-ur",
   "version": "0.1.1-alpha.0",
   "description": "BlockChain Commons Uniform Resources",
   "author": "aaronisme <aarondongchen@gmail.com>",
