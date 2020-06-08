@@ -1,5 +1,5 @@
 {
-  "name": "@opencryptolab/bc-ur",
+  "name": "bc-ur",
   "version": "0.1.2",
   "description": "BlockChain Commons Uniform Resources",
   "author": "aaronisme <aarondongchen@gmail.com>",
@@ -28,5 +28,6 @@
   },
   "bugs": {
     "url": "https://github.com/CoboVault/cobo-vault-blockchain-base/issues"
-  }
+  },
+  "gitHead": "7595bd3c8eacc4e172e1e55484b0e5aaa258c943"
 }
