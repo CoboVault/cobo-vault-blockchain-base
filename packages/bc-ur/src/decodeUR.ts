@@ -10,7 +10,7 @@ const checkAndGetSequence = (sequence: string): [number, number] => {
 };
 
 const checkDigest = (digest: string, payload: string) => {
-    if (decodeBc32Data(digest) !== sha256Hash(Buffer.from(payload, 'hex')).toString('hex')) {
+    if (decodeBc32Data(digest) !== sha256Hash(Buffer.from(decodeBc32Data(payload), 'hex')).toString('hex')) {
         throw new Error(`invalid digest: \n digest:${digest} \n payload:${payload}`);
     }
 };

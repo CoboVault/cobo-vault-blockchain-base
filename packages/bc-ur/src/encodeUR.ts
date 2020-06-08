@@ -31,7 +31,7 @@ const composeHeadersToFragments = (fragments: string[], digest: string, type = '
 export const encodeUR = (payload: string, fragmentCapacity = 200): string[] => {
     const cborPayload = encodeSimpleCBOR(payload);
     const bc32Payload = encodeBc32Data(cborPayload);
-    const digest = sha256Hash(Buffer.from(bc32Payload, 'hex')).toString('hex');
+    const digest = sha256Hash(Buffer.from(cborPayload, 'hex')).toString('hex');
     const bc32Digest = encodeBc32Data(digest);
     const fragments = bc32Payload.match(new RegExp('.{1,' + fragmentCapacity + '}', 'g'));
     return composeHeadersToFragments(fragments, bc32Digest, 'bytes');
