@@ -1,7 +1,7 @@
-import { createHash } from 'crypto';
+import { crypto } from 'bitcoinjs-lib';
 
 export const sha256Hash = (data: Buffer) => {
-    return createHash('sha256').update(data).digest();
+    return crypto.sha256(data);
 };
 
 export const compose3 = (f: Function, g: Function, h: Function) => (x: any) => {

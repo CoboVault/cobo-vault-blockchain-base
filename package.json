@@ -21,6 +21,8 @@
     "typescript": "^3.9.3"
   },
   "dependencies": {
-    "bc-bech32": "file:packages/bc-bech32"
+    "bc-bech32": "file:packages/bc-bech32",
+    "bc-ur": "file:packages/bc-ur",
+    "bitcoinjs-lib": "^5.1.10"
   }
 }
