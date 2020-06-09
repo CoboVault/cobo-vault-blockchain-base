@@ -6,7 +6,7 @@ an encoding
 ## Installation
 
 ```
-    yarn install
+yarn add bc-bech32
 ```
 
 ## Test

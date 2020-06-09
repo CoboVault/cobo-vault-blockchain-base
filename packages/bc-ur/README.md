@@ -6,7 +6,7 @@ Still in development, please do not use it in production;
 ## Install
 
 ```
-    yarn install bc-ur
+yarn add bc-ur
 ```
 
 ## Usage
