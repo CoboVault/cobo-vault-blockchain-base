@@ -1,4 +1,4 @@
-import { encodeUR, decodeUR } from '../src';
+import { encodeUR, decodeUR, extractSingleWorkload } from '../src';
 
 describe('bc-ur', () => {
     it('should encode ur', () => {
@@ -115,6 +115,27 @@ describe('bc-ur', () => {
                     'ur:bytes/7of7/0jsmw5retzcecxhpgz2e6pnzw9qy98m0frafzjuwn324w4yf8xdq0h0cmw/xf0czn37a3s00qwaf7h49t74he9xkwr9dalfww0hyn9hen2wf5q7sq4d60w8hqcer7y5k0hqa46jaeg56hk92xd0vz4',
                 ]);
             }).toThrow();
+        });
+    });
+    describe('extract single workload', () => {
+        it('should extract index and total', () => {
+            expect(
+                extractSingleWorkload(
+                    'ur:bytes/1of7/eysn6us0yvjdexn9yjkv3k7zjhp2sut478zuwcvgs5clswpfxhm7nyfjma/typjqlj2vyu9uf2snqd5k43n4vtcavrh5vzst7748ug8asggre70pj3uphqtl6jm30a4umlujxhazpxr4f6kyy94m0z3rr739jr7uppxnq2m565edzsdp5ah4xmrzwp2x678p2mzd4t8pd953luy8axe59trr2n8c740ptrvul3mlupm9jty8cehter5j0zwp7rr2v5a',
+                ),
+            ).toStrictEqual([1, 7]);
+        });
+        it('small payload', () => {
+            expect(
+                extractSingleWorkload(
+                    'ur:bytes/eysn6us0yvjdexn9yjkv3k7zjhp2sut478zuwcvgs5clswpfxhm7nyfjma/typjqlj2vyu9uf2snqd5k43n4vtcavrh5vzst7748ug8asggre70pj3uphqtl6jm30a4umlujxhazpxr4f6kyy94m0z3rr739jr7uppxnq2m565edzsdp5ah4xmrzwp2x678p2mzd4t8pd953luy8axe59trr2n8c740ptrvul3mlupm9jty8cehter5j0zwp7rr2v5a',
+                ),
+            ).toStrictEqual([1, 1]);
+            expect(
+                extractSingleWorkload(
+                    'ur:bytes/typjqlj2vyu9uf2snqd5k43n4vtcavrh5vzst7748ug8asggre70pj3uphqtl6jm30a4umlujxhazpxr4f6kyy94m0z3rr739jr7uppxnq2m565edzsdp5ah4xmrzwp2x678p2mzd4t8pd953luy8axe59trr2n8c740ptrvul3mlupm9jty8cehter5j0zwp7rr2v5a',
+                ),
+            ).toStrictEqual([1, 1]);
         });
     });
 });

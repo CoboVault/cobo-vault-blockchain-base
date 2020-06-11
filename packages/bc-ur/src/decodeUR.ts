@@ -90,3 +90,20 @@ export const decodeUR = (workloads: string[], type = 'bytes'): string => {
     const cborPayload = decodeBc32Data(bc32Payload);
     return decodeSimpleCBOR(cborPayload);
 };
+
+export const extractSingleWorkload = (workload: string): [number, number] => {
+    const pieces = workload.toUpperCase().split('/');
+    switch (pieces.length) {
+        case 2: //UR:Type/[Fragment]
+        case 3: {
+            //UR:Type/[Digest]/[Fragment] when Sequencing is omitted, Digest MAY be omitted;
+            return [1, 1];
+        }
+        case 4: {
+            //UR:Type/[Sequencing]/[Digest]/[Fragment]
+            return checkAndGetSequence(pieces[1]);
+        }
+        default:
+            throw new Error(`invalid workload pieces length: expect 2 / 3 / 4 bug got ${pieces.length}`);
+    }
+};
