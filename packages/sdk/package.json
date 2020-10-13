@@ -1,0 +1,31 @@
+{
+  "name": "sdk",
+  "version": "0.0.1",
+  "description": "Cobo Vault SDK",
+  "author": "aaronisme <aarondongchen@gmail.com>",
+  "homepage": "https://github.com/CoboVault/cobo-vault-blockchain-base#readme",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoboVault/cobo-vault-blockchain-base.git"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "build": "npm run clean && npx tsc -p tsconfig.json -outDir ./dist",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/CoboVault/cobo-vault-blockchain-base/issues"
+  },
+  "dependencies": {
+    "bc-ur": "file:../bc-ur"
+  }
+}
