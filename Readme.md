@@ -8,7 +8,7 @@ This is library is some experimental library on Cobo Vault. Currently it have th
 ## Installation
 
 ```
-    yarn install
+    npx lerna bootstrap
 ```
 
 ## Test
