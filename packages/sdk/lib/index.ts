@@ -1,4 +1,4 @@
-import { encodeUR, decodeUR } from 'bc-ur';
+import { encodeUR, decodeUR } from '@cvbb/bc-ur';
 
 export class CoboVaultSDK {
     public encodeDataForQR(data: string, fragmentCapacity = 500): string[] {

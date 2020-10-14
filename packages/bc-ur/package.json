@@ -1,11 +1,12 @@
 {
-  "name": "bc-ur",
-  "version": "0.1.6",
+  "name": "@cvbb/bc-ur",
+  "version": "0.2.0",
   "description": "BlockChain Commons Uniform Resources",
   "author": "aaronisme <aarondongchen@gmail.com>",
   "homepage": "https://github.com/CoboVault/cobo-vault-blockchain-base#readme",
   "license": "MIT",
   "main": "dist/index.js",
+  "types": "src/index.ts",
   "directories": {
     "lib": "src",
     "test": "__tests__"
@@ -15,7 +16,7 @@
     "dist"
   ],
   "dependencies": {
-    "bc-bech32": "file:../bc-bech32"
+    "@cvbb/bc-bech32": "^1.1.0"
   },
   "repository": {
     "type": "git",
@@ -29,5 +30,7 @@
   "bugs": {
     "url": "https://github.com/CoboVault/cobo-vault-blockchain-base/issues"
   },
-  "gitHead": "7595bd3c8eacc4e172e1e55484b0e5aaa258c943"
+  "publishConfig": {
+    "access": "public"
+  }
 }

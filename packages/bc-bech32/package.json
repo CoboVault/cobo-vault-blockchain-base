@@ -1,7 +1,8 @@
 {
-  "name": "bc-bech32",
-  "version": "1.0.2",
+  "name": "@cvbb/bc-bech32",
+  "version": "1.1.0",
   "main": "dist/index.js",
+  "types": "src/index.ts",
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf ./dist",
@@ -10,5 +11,22 @@
   "files": [
     "src",
     "dist"
-  ]
+  ],
+  "description": "> TODO: description",
+  "author": "aaronisme <aarondongchen@gmail.com>",
+  "homepage": "https://github.com/CoboVault/cobo-vault-blockchain-base#readme",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoboVault/cobo-vault-blockchain-base.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CoboVault/cobo-vault-blockchain-base/issues"
+  }
 }

@@ -26,6 +26,6 @@
     "url": "https://github.com/CoboVault/cobo-vault-blockchain-base/issues"
   },
   "dependencies": {
-    "bc-ur": "file:../bc-ur"
+    "@cvbb/bc-ur": "^0.2.0"
   }
 }
