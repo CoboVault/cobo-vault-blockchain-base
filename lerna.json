@@ -1,6 +1,7 @@
 {
   "packages": [
-    "packages/*"
+    "packages/bc-bech32",
+    "packages/bc-ur"
   ],
   "version": "independent"
 }
