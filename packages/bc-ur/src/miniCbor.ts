@@ -52,17 +52,17 @@ export const decodeSimpleCBOR = (data: string) => {
     }
 
     if (header == 0x58) {
-        const dataLength = dataBuffer.slice(1, 2).readUInt8();
+        const dataLength = dataBuffer.slice(1, 2).readUInt8(0);
         return dataBuffer.slice(2, 2 + dataLength).toString('hex');
     }
 
     if (header == 0x59) {
-        const dataLength = dataBuffer.slice(1, 3).readUInt16BE();
+        const dataLength = dataBuffer.slice(1, 3).readUInt16BE(0);
         return dataBuffer.slice(3, 3 + dataLength).toString('hex');
     }
 
     if (header == 0x60) {
-        const dataLength = dataBuffer.slice(1, 5).readUInt32BE();
+        const dataLength = dataBuffer.slice(1, 5).readUInt32BE(0);
         return dataBuffer.slice(5, 5 + dataLength).toString('hex');
     }
 };
