@@ -1,6 +1,6 @@
 {
   "name": "@cvbb/sdk",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Cobo Vault SDK",
   "author": "aaronisme <aarondongchen@gmail.com>",
   "homepage": "https://github.com/CoboVault/cobo-vault-blockchain-base#readme",
@@ -26,7 +26,7 @@
     "url": "https://github.com/CoboVault/cobo-vault-blockchain-base/issues"
   },
   "dependencies": {
-    "@cvbb/bc-ur": "^0.2.0"
+    "@cvbb/bc-ur": "^0.2.4"
   },
   "publishConfig": {
     "access": "public"
