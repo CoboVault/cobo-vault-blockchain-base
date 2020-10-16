@@ -1,6 +1,6 @@
 {
   "name": "@cvbb/bc-ur",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "BlockChain Commons Uniform Resources",
   "author": "aaronisme <aarondongchen@gmail.com>",
   "homepage": "https://github.com/CoboVault/cobo-vault-blockchain-base#readme",
@@ -16,7 +16,7 @@
     "dist"
   ],
   "dependencies": {
-    "@cvbb/bc-bech32": "^1.1.3",
+    "@cvbb/bc-bech32": "^1.1.4",
     "sha.js": "^2.4.11"
   },
   "repository": {
