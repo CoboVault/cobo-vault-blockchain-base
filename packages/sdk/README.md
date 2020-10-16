@@ -1,11 +1,11 @@
-# `sdk`
+# `@cvbb/sdk`
 
 > TODO: description
 
 ## Usage
 
 ```
-const sdk = require('sdk');
+const sdk = require('@cvbb/sdk');
 
 // TODO: DEMONSTRATE API
 ```

@@ -1,5 +1,5 @@
 {
-  "name": "sdk",
+  "name": "@cvbb/sdk",
   "version": "0.0.1",
   "description": "Cobo Vault SDK",
   "author": "aaronisme <aarondongchen@gmail.com>",
@@ -27,5 +27,8 @@
   },
   "dependencies": {
     "@cvbb/bc-ur": "^0.2.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
