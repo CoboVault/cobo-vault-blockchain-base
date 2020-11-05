@@ -5,7 +5,7 @@ export enum Bech32Version {
     bis = 2,
 }
 
-const convertBits = (data: Uint8Array | number[], fromBits: number, toBits: number, pad: boolean): number[] => {
+const convertBits = (data: Uint8Array | number[], fromBits: number, toBits: number, pad: boolean): number[] | null => {
     let acc = 0;
     let bits = 0;
     const ret = [];
@@ -48,7 +48,11 @@ export const decodeSegwitAddress = (hrp: string, addr: string): { version: numbe
 };
 
 export const encodeSegwitAddress = (hrp: string, version: number, program: Uint8Array | number[]): string | null => {
-    const ret = bech32.encode(hrp, [version].concat(convertBits(program, 8, 5, true)), Bech32Version.Origin);
+    const u82u5 = convertBits(program, 8, 5, true);
+    if (!u82u5) {
+        return null;
+    }
+    const ret = bech32.encode(hrp, [version].concat(u82u5), Bech32Version.Origin);
     if (decodeSegwitAddress(hrp, ret) === null) {
         return null;
     }
@@ -57,14 +61,20 @@ export const encodeSegwitAddress = (hrp: string, version: number, program: Uint8
 
 export const encodeBc32Data = (hex: string): string => {
     const data = Buffer.from(hex, 'hex');
-    return bech32.encode(null, convertBits(data, 8, 5, true), Bech32Version.bis);
+    const u82u5 = convertBits(data, 8, 5, true);
+    if (!u82u5) {
+        throw new Error('invalid input');
+    } else {
+        return bech32.encode(undefined, u82u5, Bech32Version.bis);
+    }
 };
 
 export const decodeBc32Data = (data: string): null | string => {
     const result = bech32.decode(data);
     if (result) {
         const res = convertBits(Buffer.from(result.data), 5, 8, false);
-        return Buffer.from(res).toString('hex');
+        if (res) return Buffer.from(res).toString('hex');
+        return null;
     } else {
         return null;
     }

@@ -10,7 +10,9 @@ const checkAndGetSequence = (sequence: string): [number, number] => {
 };
 
 const checkDigest = (digest: string, payload: string) => {
-    if (decodeBc32Data(digest) !== sha256Hash(Buffer.from(decodeBc32Data(payload), 'hex')).toString('hex')) {
+    const decoded = decodeBc32Data(payload);
+    if (!decoded) throw new Error(`can not decode payload: ${payload}`);
+    if (decodeBc32Data(digest) !== sha256Hash(Buffer.from(decoded, 'hex')).toString('hex')) {
         throw new Error(`invalid digest: \n digest:${digest} \n payload:${payload}`);
     }
 };
@@ -88,6 +90,9 @@ const getBC32Payload = (workloads: string[], type = 'bytes'): string => {
 export const decodeUR = (workloads: string[], type = 'bytes'): string => {
     const bc32Payload = getBC32Payload(workloads, type);
     const cborPayload = decodeBc32Data(bc32Payload);
+    if (!cborPayload) {
+        throw new Error('invalid data');
+    }
     return decodeSimpleCBOR(cborPayload);
 };
 
