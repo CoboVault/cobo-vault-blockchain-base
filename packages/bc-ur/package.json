@@ -19,6 +19,9 @@
     "@cvbb/bc-bech32": "^1.1.4",
     "sha.js": "^2.4.11"
   },
+  "devDependencies": {
+    "@types/sha.js": "^2.4.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CoboVault/cobo-vault-blockchain-base.git"
@@ -26,7 +29,7 @@
   "scripts": {
     "clean": "rm -rf ./dist",
     "build": "npm run clean && npx tsc -p tsconfig.json -outDir ./dist",
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "test": "jest"
   },
   "bugs": {
     "url": "https://github.com/CoboVault/cobo-vault-blockchain-base/issues"

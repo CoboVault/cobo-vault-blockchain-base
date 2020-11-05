@@ -1,4 +1,10 @@
 {
+  "command": {
+    "bootstrap": {
+      "hoist": true,
+      "npmClientArgs": ["--no-package-lock", "--no-ci"]
+    }
+  },
   "packages": [
     "packages/*"
   ],

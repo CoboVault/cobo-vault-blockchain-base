@@ -881,6 +881,20 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@cvbb/bc-bech32@file:packages/bc-bech32":
+  version "1.1.4"
+
+"@cvbb/bc-ur@file:packages/bc-ur":
+  version "0.2.4"
+  dependencies:
+    "@cvbb/bc-bech32" "file:../../Library/Caches/Yarn/v6/npm-@cvbb-bc-ur-0.2.4-0588ab49-4132-4bd7-91f1-21ea98a7d8dd-1604573876937/node_modules/@cvbb/bc-bech32"
+    sha.js "^2.4.11"
+
+"@cvbb/sdk@file:packages/sdk":
+  version "0.1.3"
+  dependencies:
+    "@cvbb/bc-ur" "file:../../Library/Caches/Yarn/v6/npm-@cvbb-sdk-0.1.3-09871af8-3b10-48d3-9373-807c5fe36f54-1604573876941/node_modules/@cvbb/bc-ur"
+
 "@eslint/eslintrc@^0.1.3":
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-0.1.3.tgz#7d1a2b2358552cc04834c0979bd4275362e37085"
@@ -2106,6 +2120,13 @@
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.1.2.tgz#4929992f87a0129f4960a110faeb526210562e7b"
   integrity sha512-IiPhNnenzkqdSdQH3ifk9LoX7oQe61ZlDdDO4+MUv6FyWdPGDPr26gCPVs3oguZEMq//nFZZpwUZcVuNJsG+DQ==
+
+"@types/sha.js@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@types/sha.js/-/sha.js-2.4.0.tgz#bce682ef860b40f419d024fa08600c3b8d24bb01"
+  integrity sha512-amxKgPy6WJTKuw8mpUwjX2BSxuBtBmZfRwIUDIuPJKNwGN8CWDli8JTg5ONTWOtcTkHIstvT7oAhhYXqEjStHQ==
+  dependencies:
+    "@types/node" "*"
 
 "@types/stack-utils@^2.0.0":
   version "2.0.0"
@@ -7096,6 +7117,14 @@ set-value@^2.0.0, set-value@^2.0.1:
     is-extendable "^0.1.1"
     is-plain-object "^2.0.3"
     split-string "^3.0.1"
+
+sha.js@^2.4.11:
+  version "2.4.11"
+  resolved "https://registry.yarnpkg.com/sha.js/-/sha.js-2.4.11.tgz#37a5cf0b81ecbc6943de109ba2960d1b26584ae7"
+  integrity sha512-QMEp5B7cftE7APOjk5Y6xgrbWu+WkLVQwk8JNjZ8nKRciZaByEW6MubieAiToS7+dwvrjGhH8jRXz3MVd0AYqQ==
+  dependencies:
+    inherits "^2.0.1"
+    safe-buffer "^5.0.1"
 
 shallow-clone@^3.0.0:
   version "3.0.1"
