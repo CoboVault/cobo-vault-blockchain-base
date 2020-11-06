@@ -2,32 +2,29 @@
     this an simple cbor implementation which is just using
     on BCR-05
 */
-export const composeHeader = (length: number) => {
+export const composeHeader = (length: number): Buffer => {
     let header: Buffer;
     if (length > 0 && length <= 23) {
         header = Buffer.from([0x40 + length]);
-    }
-    if (length >= 24 && length <= 255) {
+    } else if (length >= 24 && length <= 255) {
         const headerLength = Buffer.alloc(1);
         headerLength.writeUInt8(length);
         header = Buffer.concat([Buffer.from([0x58]), headerLength]);
-    }
-
-    if (length >= 256 && length <= 65535) {
+    } else if (length >= 256 && length <= 65535) {
         const headerLength = Buffer.alloc(2);
         headerLength.writeUInt16BE(length);
         header = Buffer.concat([Buffer.from([0x59]), headerLength]);
-    }
-
-    if (length >= 65536 && length <= 2 ** 32 - 1) {
+    } else if (length >= 65536 && length <= 2 ** 32 - 1) {
         const headerLength = Buffer.alloc(4);
         headerLength.writeUInt32BE(length);
         header = Buffer.concat([Buffer.from([0x60]), headerLength]);
+    } else {
+        throw new Error('length exceeded');
     }
     return header;
 };
 
-export const encodeSimpleCBOR = (data: string) => {
+export const encodeSimpleCBOR = (data: string): string => {
     const bufferData = Buffer.from(data, 'hex');
     if (bufferData.length <= 0 || bufferData.length >= 2 ** 32) {
         throw new Error('data is too large');
@@ -42,27 +39,22 @@ export const encodeSimpleCBOR = (data: string) => {
 export const decodeSimpleCBOR = (data: string) => {
     const dataBuffer = Buffer.from(data, 'hex');
     if (dataBuffer.length <= 0) {
-        throw new Error('input data is not valid');
+        throw new Error('invalid input');
     }
-
     const header = dataBuffer[0];
     if (header < 0x58) {
         const dataLength = header - 0x40;
         return dataBuffer.slice(1, 1 + dataLength).toString('hex');
-    }
-
-    if (header == 0x58) {
+    } else if (header == 0x58) {
         const dataLength = dataBuffer.slice(1, 2).readUInt8(0);
         return dataBuffer.slice(2, 2 + dataLength).toString('hex');
-    }
-
-    if (header == 0x59) {
+    } else if (header == 0x59) {
         const dataLength = dataBuffer.slice(1, 3).readUInt16BE(0);
         return dataBuffer.slice(3, 3 + dataLength).toString('hex');
-    }
-
-    if (header == 0x60) {
+    } else if (header == 0x60) {
         const dataLength = dataBuffer.slice(1, 5).readUInt32BE(0);
         return dataBuffer.slice(5, 5 + dataLength).toString('hex');
+    } else {
+        throw new Error('invalid input');
     }
 };

@@ -3,7 +3,7 @@ import { Bech32Version } from './index';
 const CHARSET = 'qpzry9x8gf2tvdw0s3jn54khce6mua7l';
 const GENERATOR = [0x3b6a57b2, 0x26508e6d, 0x1ea119fa, 0x3d4233dd, 0x2a1462b3];
 
-function polymod(values: number[]): number {
+const polymod = (values: number[]): number => {
     let chk = 1;
     for (let p = 0; p < values.length; ++p) {
         const top = chk >> 25;
@@ -15,9 +15,9 @@ function polymod(values: number[]): number {
         }
     }
     return chk;
-}
+};
 
-function hrpExpand(hrp: string) {
+const hrpExpand = (hrp: string): number[] => {
     const ret: number[] = [];
     let p: number;
     for (p = 0; p < hrp.length; ++p) {
@@ -28,9 +28,9 @@ function hrpExpand(hrp: string) {
         ret.push(hrp.charCodeAt(p) & 31);
     }
     return ret;
-}
+};
 
-function verifyChecksum(hrp: string | undefined, data: number[], version: Bech32Version) {
+const verifyChecksum = (hrp: string | undefined, data: number[], version: Bech32Version): boolean => {
     let header: number[];
     if (hrp) {
         header = hrpExpand(hrp);
@@ -39,9 +39,9 @@ function verifyChecksum(hrp: string | undefined, data: number[], version: Bech32
     }
     const check = version === Bech32Version.Origin ? 1 : 0x3fffffff;
     return polymod(header.concat(data)) === check;
-}
+};
 
-function createChecksum(hrp: string | undefined, data: number[], bech32Version: Bech32Version): number[] {
+const createChecksum = (hrp: string | undefined, data: number[], bech32Version: Bech32Version): number[] => {
     let values: number[];
     if (hrp) {
         values = hrpExpand(hrp).concat(data).concat([0, 0, 0, 0, 0, 0]);
@@ -57,7 +57,7 @@ function createChecksum(hrp: string | undefined, data: number[], bech32Version: 
         ret.push((mod >> (5 * (5 - p))) & 31);
     }
     return ret;
-}
+};
 
 const encode = (hrp: string | undefined, data: number[], version: Bech32Version): string => {
     const combined = data.concat(createChecksum(hrp, data, version));
@@ -73,7 +73,7 @@ const encode = (hrp: string | undefined, data: number[], version: Bech32Version)
     return ret;
 };
 
-const decodeBc32 = (bechString: string): { hrp: null; data: number[] } => {
+const decodeBc32 = (bechString: string): { hrp: null; data: number[] } | null => {
     const data: number[] = [];
     for (let p = 0; p < bechString.length; ++p) {
         const d = CHARSET.indexOf(bechString.charAt(p));
@@ -82,7 +82,7 @@ const decodeBc32 = (bechString: string): { hrp: null; data: number[] } => {
         }
         data.push(d);
     }
-    if (!verifyChecksum(null, data, Bech32Version.bis)) {
+    if (!verifyChecksum(undefined, data, Bech32Version.bis)) {
         return null;
     }
     return { hrp: null, data: data.slice(0, data.length - 6) };
