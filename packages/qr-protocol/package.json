@@ -10,7 +10,7 @@
   },
   "scripts": {
     "clean": "rm -rf ./dist",
-    "build": "npm run clean && npm run update-proto-buffer && npx tsc -p tsconfig.json -outDir ./dist && cp -R src/QRProtocolBuf dist/QRProtocolBuf",
+    "build": "npm run clean && npx tsc -p tsconfig.json -outDir ./dist && cp -R src/QRProtocolBuf dist/QRProtocolBuf",
     "test": "jest",
     "protobuf": "npx pbjs -t static-module -w es6 -o src/QRProtocolBuf/proto.js crypto-coin-message-protocol/*.proto; npx pbts -o src/QRProtocolBuf/proto.d.ts src/QRProtocolBuf/proto.js",
     "update-proto-buffer": "git submodule update --remote && npm run protobuf"
@@ -30,6 +30,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CoboVault/cobo-vault-blockchain-base.git"
+  },
+  "jest": {
+    "modulePathIgnorePatterns": ["__data__"]
   },
   "author": "",
   "license": "MIT",

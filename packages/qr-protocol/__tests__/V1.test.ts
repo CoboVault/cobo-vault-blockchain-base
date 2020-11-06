@@ -1,6 +1,6 @@
-import { V1} from '../src/QRProtocolCodec';
-import { sync } from '../__data__/sync';
-import { decodedSync } from '../__data__/decodedSync';
+import { V1 } from '../src/QRProtocolCodec';
+import { sync } from './__data__/sync';
+import { decodedSync } from './__data__/decodedSync';
 
 const qrs = [
     {
@@ -44,9 +44,8 @@ describe('QRProtocolCodec V1', () => {
         );
     });
     it('should encode protobuf to QRCode', () => {
-        expect(V1.encodeProtobufToQRCode(sync, 800)).toStrictEqual(qrs);
-    });
-    it('should decode QRCode to protobuf', () => {
-        expect(V1.decodeQRCodeToProtobuf(qrs).toJSON()).toStrictEqual(decodedSync);
+        const encoded = V1.encodeProtobufToQRCode(sync, 800);
+        const decoded = V1.decodeQRCodeToProtobuf(encoded).toJSON();
+        expect(decoded).toStrictEqual(decodedSync);
     });
 });

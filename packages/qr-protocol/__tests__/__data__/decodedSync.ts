@@ -197,7 +197,7 @@ export const decodedSync = {
     coldVersion: 10900,
     deviceType: 'Cobo Vault Pro',
     data: {
-        type: "TYPE_SYNC",
+        type: 'TYPE_SYNC',
         uuid: '4721d2b71e2a2393d58d8d4b3f16b8c4dac62b020d870504305e5aa792c2b59e',
         sync: {
             coins: coins,
