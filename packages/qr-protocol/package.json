@@ -41,5 +41,8 @@
   "bugs": {
     "url": "https://github.com/CoboVault/cobo-vault-blockchain-base/issues"
   },
-  "homepage": "https://github.com/CoboVault/cobo-vault-blockchain-base#readme"
+  "homepage": "https://github.com/CoboVault/cobo-vault-blockchain-base#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }
