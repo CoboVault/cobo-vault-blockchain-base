@@ -1,40 +1,38 @@
 {
-  "name": "@cvbb/bc-ur",
-  "version": "0.2.6",
-  "description": "BlockChain Commons Uniform Resources",
-  "author": "aaronisme <aarondongchen@gmail.com>",
-  "homepage": "https://github.com/CoboVault/cobo-vault-blockchain-base#readme",
-  "license": "MIT",
-  "main": "dist/index.js",
-  "types": "src/index.ts",
-  "directories": {
-    "lib": "src",
-    "test": "__tests__"
-  },
-  "files": [
-    "src",
-    "dist"
-  ],
-  "dependencies": {
-    "@cvbb/bc-bech32": "^1.1.6",
-    "sha.js": "^2.4.11"
-  },
-  "devDependencies": {
-    "@types/sha.js": "^2.4.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CoboVault/cobo-vault-blockchain-base.git"
-  },
-  "scripts": {
-    "clean": "rm -rf ./dist",
-    "build": "npm run clean && npx tsc -p tsconfig.json -outDir ./dist",
-    "test": "jest"
-  },
-  "bugs": {
-    "url": "https://github.com/CoboVault/cobo-vault-blockchain-base/issues"
-  },
-  "publishConfig": {
-    "access": "public"
-  }
+    "name": "@cvbb/bc-ur",
+    "version": "0.2.7",
+    "description": "BlockChain Commons Uniform Resources",
+    "author": "aaronisme <aarondongchen@gmail.com>",
+    "homepage": "https://github.com/CoboVault/cobo-vault-blockchain-base#readme",
+    "license": "MIT",
+    "main": "dist/index.js",
+    "types": "src/index.ts",
+    "directories": {
+        "lib": "src",
+        "test": "__tests__"
+    },
+    "files": [
+        "src",
+        "dist"
+    ],
+    "dependencies": {
+        "@cvbb/bc-bech32": "^1.1.7",
+        "@types/sha.js": "^2.4.0",
+        "sha.js": "^2.4.11"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/CoboVault/cobo-vault-blockchain-base.git"
+    },
+    "scripts": {
+        "clean": "rm -rf ./dist",
+        "build": "npm run clean && npx tsc -p tsconfig.json -outDir ./dist",
+        "test": "jest"
+    },
+    "bugs": {
+        "url": "https://github.com/CoboVault/cobo-vault-blockchain-base/issues"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
 }
