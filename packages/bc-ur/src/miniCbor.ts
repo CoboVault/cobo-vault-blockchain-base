@@ -8,15 +8,15 @@ export const composeHeader = (length: number): Buffer => {
         header = Buffer.from([0x40 + length]);
     } else if (length >= 24 && length <= 255) {
         const headerLength = Buffer.alloc(1);
-        headerLength.writeUInt8(length);
+        headerLength.writeUInt8(length, 0);
         header = Buffer.concat([Buffer.from([0x58]), headerLength]);
     } else if (length >= 256 && length <= 65535) {
         const headerLength = Buffer.alloc(2);
-        headerLength.writeUInt16BE(length);
+        headerLength.writeUInt16BE(length, 0);
         header = Buffer.concat([Buffer.from([0x59]), headerLength]);
     } else if (length >= 65536 && length <= 2 ** 32 - 1) {
         const headerLength = Buffer.alloc(4);
-        headerLength.writeUInt32BE(length);
+        headerLength.writeUInt32BE(length, 0);
         header = Buffer.concat([Buffer.from([0x60]), headerLength]);
     } else {
         throw new Error('length exceeded');
