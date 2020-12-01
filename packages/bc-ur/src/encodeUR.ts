@@ -37,5 +37,5 @@ export const encodeUR = (payload: string, fragmentCapacity = 200): string[] => {
     if (!fragments) {
         throw new Error('Unexpected error when encoding');
     }
-    return composeHeadersToFragments(fragments, bc32Digest, 'bytes');
+    return composeHeadersToFragments(fragments, bc32Digest, 'bytes').map((str) => str.toUpperCase());
 };
