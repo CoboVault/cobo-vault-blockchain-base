@@ -1,1 +1,4 @@
-export { CoboVaultSDK } from './base';
+import service from './service';
+service.bootstrap();
+
+export default service.makeService();
