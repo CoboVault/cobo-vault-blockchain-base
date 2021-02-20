@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { useAnimatedQRCodePlayer } from './useAnimatedQRCodePlayer';
 import { useAnimatedQRCodeReader } from './useAnimatedQRCodeReader';
+import { Play, Read } from '../types';
 
 export const useController = (): [
     JSX.Element,
     {
-        play: () => void;
-        read: () => void;
+        play: Play;
+        read: Read;
     },
 ] => {
     const [visible, setVisible] = useState(false);
@@ -28,15 +29,21 @@ export const useController = (): [
     return [
         element,
         {
-            play: () => {
-                play();
+            play: async (
+                data: string,
+                options?: {
+                    refreshSpeed?: number;
+                    size?: number;
+                },
+            ) => {
+                await play(data, options);
                 reset();
                 return;
             },
-            read: () => {
-                read();
+            read: async () => {
+                const result = await read();
                 reset();
-                return;
+                return result;
             },
         },
     ];
