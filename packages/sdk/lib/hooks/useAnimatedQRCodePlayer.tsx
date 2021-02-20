@@ -1,46 +1,90 @@
-import React, { useEffect, useState } from 'react';
-import { interval, Subject } from 'rxjs';
+import React, { useEffect, useMemo, useState } from 'react';
+import { interval } from 'rxjs';
 import { BaseQRCode } from '../components/BaseQRCode';
 import { Play } from '../types';
 import { encodeUR } from '@cvbb/bc-ur';
+import { EventEmitter } from 'events';
+import { Button } from '../components/Button';
+import { ButtonGroup } from '../components/ButtonGroup';
 
 export const useAnimatedQRCodePlayer = (): [JSX.Element, { play: Play }] => {
     const [data, setData] = useState<string[]>([]);
     const [refreshSpeed, setRefreshSpeed] = useState(500);
-    const [size, setSize] = useState(250);
     const [index, setIndex] = useState(0);
+
+    const [isPause, setPause] = useState(false);
+
+    const pause = () => {
+        setPause(true);
+    };
+
+    const play = () => {
+        setPause(false);
+    };
+
+    const next = () => {
+        setIndex((index) => {
+            if (index >= splitArray.length - 1) {
+                return 0;
+            } else {
+                return index + 1;
+            }
+        });
+    };
+
+    const prev = () => {
+        setIndex((index) => {
+            if (index < 0) {
+                return splitArray.length - 1;
+            } else {
+                return index - 1;
+            }
+        });
+    };
+
+    const ee = useMemo(() => new EventEmitter(), []);
     const splitArray = data;
     const reset = () => {
         setData([]);
         setRefreshSpeed(500);
-        setSize(250);
         setIndex(0);
     };
+
     useEffect(() => {
-        const subscribe = interval(refreshSpeed).subscribe(() => {
-            if (index >= splitArray.length - 1) {
-                setIndex(0);
-            } else {
-                setIndex(index + 1);
-            }
-        });
-        return () => {
-            subscribe.unsubscribe();
-        };
-    }, [refreshSpeed, splitArray]);
-    const subject = new Subject<boolean>();
+        if (!isPause) {
+            const subscribe = interval(refreshSpeed).subscribe(() => {
+                next();
+            });
+            return () => {
+                subscribe.unsubscribe();
+            };
+        }
+    }, [refreshSpeed, splitArray, isPause]);
 
     const finish = () => {
-        subject.next(true);
+        ee.emit('finish', true);
     };
 
     const element = (
-        <div>
-            <BaseQRCode size={size} data={splitArray[index]} />
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+            }}
+        >
+            <BaseQRCode size={288} data={splitArray[index]} />
             <p style={{ textAlign: 'center' }}>
                 {index + 1}/{splitArray.length}
             </p>
-            <button onClick={finish} />
+            <ButtonGroup>
+                {isPause ? <Button onClick={play}>Play</Button> : <Button onClick={pause}>Pause</Button>}
+                <Button onClick={next}>Next</Button>
+                <Button onClick={prev}>Prev</Button>
+            </ButtonGroup>
+            <ButtonGroup>
+                <Button onClick={finish}>Finish</Button>
+            </ButtonGroup>
         </div>
     );
 
@@ -51,7 +95,6 @@ export const useAnimatedQRCodePlayer = (): [JSX.Element, { play: Play }] => {
                 data: string,
                 options?: {
                     refreshSpeed?: number;
-                    size?: number;
                 },
             ) => {
                 return new Promise((resolve) => {
@@ -59,15 +102,10 @@ export const useAnimatedQRCodePlayer = (): [JSX.Element, { play: Play }] => {
                     setData(urs);
                     if (options) {
                         options.refreshSpeed && setRefreshSpeed(options.refreshSpeed);
-                        options.size && setSize(options.size);
                     }
-                    const subscription = subject.subscribe((finish: boolean) => {
-                        if (finish) {
-                            reset();
-                            subscription.unsubscribe();
-                            subject.complete();
-                            resolve();
-                        }
+                    ee.once('finish', () => {
+                        reset();
+                        resolve();
                     });
                 });
             },

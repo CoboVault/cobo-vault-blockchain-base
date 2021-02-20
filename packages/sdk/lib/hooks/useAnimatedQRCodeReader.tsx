@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { Subject } from 'rxjs';
+import React, { useMemo, useState } from 'react';
 import QrReader from 'react-qr-reader';
 import { decodeUR, extractSingleWorkload } from '@cvbb/bc-ur';
+import { EventEmitter } from 'events';
+import { Button } from '../components/Button';
 
 import { Progress } from '../components/Progress';
-import { DecodedResult, Read } from '../types';
+import { Read } from '../types';
+import { ButtonGroup } from '../components/ButtonGroup';
 
 export interface URQRCodeData {
     total: number;
@@ -15,9 +17,10 @@ export interface URQRCodeData {
 export const useAnimatedQRCodeReader = (): [JSX.Element, { read: Read }] => {
     const [urCodes, setURCodes] = useState<URQRCodeData[]>([]);
     const [error, setError] = useState('');
-    const subject = new Subject<DecodedResult>();
+    const ee = useMemo(() => new EventEmitter(), []);
     const reset = () => {
         setURCodes([]);
+        setError('');
     };
 
     const processQRCode = (qr: string) => {
@@ -32,16 +35,24 @@ export const useAnimatedQRCodeReader = (): [JSX.Element, { read: Read }] => {
         }
     };
 
+    const handleStop = () => {
+        ee.emit('read', null);
+    };
+
+    const handleRetry = () => {
+        reset();
+    };
+
     const processJSON = (data: string) => {
         JSON.parse(data);
-        subject.next({
+        ee.emit('read', {
             type: 'json',
             result: data,
         });
     };
 
     const processText = (data: string) => {
-        subject.next({
+        ee.emit('read', {
             type: 'text',
             result: data,
         });
@@ -53,7 +64,7 @@ export const useAnimatedQRCodeReader = (): [JSX.Element, { read: Read }] => {
             if (urCodes.length > 0) {
                 const currentTotal = urCodes[0].total;
                 if (total !== currentTotal) {
-                    setError('invalid animated qrcode: mismatching qrs');
+                    setError('invalid animated qrcode: mismatching qrs, please retry');
                 }
             }
             if (!urCodes.find((item) => item.index === index)) {
@@ -61,7 +72,7 @@ export const useAnimatedQRCodeReader = (): [JSX.Element, { read: Read }] => {
                 setURCodes(newCodes);
                 if (newCodes.length === total) {
                     const result = decodeUR(newCodes.map((item) => item.data));
-                    subject.next({
+                    ee.emit('read', {
                         type: 'ur',
                         result,
                     });
@@ -73,7 +84,13 @@ export const useAnimatedQRCodeReader = (): [JSX.Element, { read: Read }] => {
     };
 
     const element = (
-        <div>
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+            }}
+        >
             <QrReader
                 onScan={(data: any) => {
                     if (data) {
@@ -81,12 +98,19 @@ export const useAnimatedQRCodeReader = (): [JSX.Element, { read: Read }] => {
                     }
                 }}
                 delay={100}
-                style={{ width: 250 }}
+                style={{ width: '100%' }}
                 onError={(e) => {
-                    console.log(e);
+                    setError(e.message);
                 }}
             />
-            {urCodes[0] && urCodes[0].total > 1 && <Progress progress={urCodes.length} total={urCodes[0].total} />}
+            <p>
+                {urCodes[0] && urCodes[0].total > 1 && <Progress progress={urCodes.length} total={urCodes[0].total} />}
+            </p>
+            <ButtonGroup>
+                <Button onClick={handleStop}>Close</Button>
+                {error && <Button onClick={handleRetry}>Retry</Button>}
+            </ButtonGroup>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
     );
 
@@ -95,11 +119,9 @@ export const useAnimatedQRCodeReader = (): [JSX.Element, { read: Read }] => {
         {
             read: () => {
                 return new Promise((resolve) => {
-                    const subscription = subject.subscribe((decoded) => {
-                        subscription.unsubscribe();
-                        subject.complete();
+                    ee.once('read', (result) => {
                         reset();
-                        resolve(decoded);
+                        resolve(result);
                     });
                 });
             },

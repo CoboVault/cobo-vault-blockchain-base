@@ -4,6 +4,17 @@ import { useAnimatedQRCodePlayer } from './useAnimatedQRCodePlayer';
 import { useAnimatedQRCodeReader } from './useAnimatedQRCodeReader';
 import { Play, Read } from '../types';
 
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+    },
+};
+
 export const useController = (): [
     JSX.Element,
     {
@@ -20,11 +31,21 @@ export const useController = (): [
         setMode('play');
     };
     const element = (
-        <div>
-            <Modal isOpen={visible}>
-                <div>{mode === 'read' ? AnimatedQRCodeReader : AnimatedQRCodePlayer}</div>
-            </Modal>
-        </div>
+        <Modal isOpen={visible} style={customStyles}>
+            <div
+                style={{
+                    width: 320,
+                    boxSizing: 'border-box',
+                    padding: 16,
+                    flex: 1,
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}
+            >
+                {mode === 'read' ? AnimatedQRCodeReader : AnimatedQRCodePlayer}
+            </div>
+        </Modal>
     );
     return [
         element,
@@ -36,11 +57,15 @@ export const useController = (): [
                     size?: number;
                 },
             ) => {
+                setVisible(true);
+                setMode('play');
                 await play(data, options);
                 reset();
                 return;
             },
             read: async () => {
+                setVisible(true);
+                setMode('read');
                 const result = await read();
                 reset();
                 return result;

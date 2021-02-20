@@ -1,5 +1,5 @@
 export type DecodedResult = {
-    type: 'json' | 'ur' | 'text';
+    type: 'json' | 'ur' | 'text' | 'none';
     result: string;
     error?: string;
 };
@@ -12,4 +12,4 @@ export type Play = (
     },
 ) => Promise<void>;
 
-export type Read = () => Promise<DecodedResult>;
+export type Read = () => Promise<DecodedResult | undefined>;

@@ -22,7 +22,7 @@
   "scripts": {
     "clean": "rm -rf ./dist",
     "build": "npm run clean && npx tsc -p tsconfig.json -outDir ./dist",
-    "test": "jest"
+    "build:watch": "npm run clean && npx tsc -w -p tsconfig.json -outDir ./dist"
   },
   "bugs": {
     "url": "https://github.com/CoboVault/cobo-vault-blockchain-base/issues"

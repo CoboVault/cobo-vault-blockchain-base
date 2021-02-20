@@ -1,40 +1,29 @@
-import { encodeUR, decodeUR } from '@cvbb/bc-ur';
 import ReactDOM from 'react-dom';
 import Root from './Root';
 import React from 'react';
+import { Play, Read } from './types';
+import Modal from 'react-modal';
 
 let initialized = false;
-
-const encode = (data: string, fragmentCapacity = 500): string[] => {
-    const dataHex = Buffer.from(data).toString('hex');
-    return encodeUR(dataHex, fragmentCapacity);
-};
-
-const decode = (dataFrames: string[]): string => {
-    const hexString = decodeUR(dataFrames);
-    return Buffer.from(hexString, 'hex').toString();
-};
 
 const bootstrap = (): void => {
     const htmlBody = document.getElementsByTagName('body').item(0) as HTMLBodyElement;
     const sdkDiv = document.createElement('div');
+    sdkDiv.id = 'cv_sdk_container';
     htmlBody.appendChild(sdkDiv);
+    Modal.setAppElement('#cv_sdk_container');
     ReactDOM.render(React.createElement(Root), sdkDiv);
 };
 
-const setup = (r: () => any, p: (data: string) => void) => {
+const setup = (r: Read, p: Play) => {
     initialized = true;
     read = r;
     play = p;
 };
 
-let read = () => {
-    return;
-};
+let read: Read;
 
-let play = (data: string): void => {
-    return;
-};
+let play: Play;
 
 export default {
     bootstrap,
