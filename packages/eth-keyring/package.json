@@ -1,0 +1,11 @@
+{
+  "name": "@cvbb/eth-keyring",
+  "version": "1.0.0",
+  "description": "eth-keyring interact with cobo vault",
+  "main": "index.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "soralit <soralitria@gmail.com>",
+  "license": "ISC"
+}
