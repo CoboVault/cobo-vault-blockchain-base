@@ -96,6 +96,49 @@ export const decodeUR = (workloads: string[], type = 'bytes'): string => {
     return decodeSimpleCBOR(cborPayload);
 };
 
+const onlyUniq = (value: string, index: number, self: string[]) => {
+    return self.indexOf(value) === index;
+};
+
+export const smartDecodeUR = (
+    workloads: string[],
+): {
+    success: boolean;
+    current: number;
+    length: number;
+    workloads: string[];
+    result: string;
+} => {
+    if (workloads.length > 0) {
+        const [index, total] = extractSingleWorkload(workloads[0]);
+        if (workloads.length === total) {
+            return {
+                success: true,
+                current: workloads.length,
+                length: total,
+                workloads: [],
+                result: decodeUR(workloads),
+            };
+        } else {
+            return {
+                success: false,
+                current: workloads.length,
+                length: total,
+                workloads: workloads.filter(onlyUniq),
+                result: '',
+            };
+        }
+    } else {
+        return {
+            success: false,
+            current: 0,
+            length: 0,
+            workloads: [],
+            result: '',
+        };
+    }
+};
+
 export const extractSingleWorkload = (workload: string): [number, number] => {
     const pieces = workload.toUpperCase().split('/');
     switch (pieces.length) {

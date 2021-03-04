@@ -1,2 +1,4 @@
-export { CoboVaultSDK } from './base';
-export { CVXRPSdk } from './xrp';
+import service from './service';
+service.bootstrap();
+
+export default service.makeService();
