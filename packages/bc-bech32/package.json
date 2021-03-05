@@ -1,6 +1,6 @@
 {
   "name": "@cvbb/bc-bech32",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "main": "dist/index.js",
   "types": "src/index.ts",
   "license": "MIT",
