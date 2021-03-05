@@ -7,6 +7,9 @@
     "clean": "rm -rf ./dist",
     "build": "npm run clean && npx tsc -p tsconfig.json -outDir ./dist"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "soralit <soralitria@gmail.com>",
   "license": "ISC",
   "dependencies": {
@@ -14,5 +17,6 @@
     "ethereumjs-tx": "^2.1.2",
     "ethereumjs-util": "^7.0.8",
     "hdkey": "^2.0.1"
-  }
+  },
+  "gitHead": "5afcf90b2b47d23aecfa56c73f6a0054da4cc8df"
 }
