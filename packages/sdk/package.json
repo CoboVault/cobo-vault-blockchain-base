@@ -1,6 +1,6 @@
 {
   "name": "@cvbb/sdk",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Cobo Vault SDK",
   "author": "aaronisme <aarondongchen@gmail.com>",
   "homepage": "https://github.com/CoboVault/cobo-vault-blockchain-base#readme",
