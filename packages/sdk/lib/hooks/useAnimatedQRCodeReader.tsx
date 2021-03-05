@@ -36,7 +36,10 @@ export const useAnimatedQRCodeReader = (): [JSX.Element, { read: Read }] => {
     };
 
     const handleStop = () => {
-        ee.emit('read', null);
+        ee.emit('read', {
+            type: 'none',
+            result: '',
+        });
     };
 
     const handleRetry = () => {

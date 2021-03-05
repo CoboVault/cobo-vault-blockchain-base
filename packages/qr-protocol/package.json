@@ -1,6 +1,6 @@
 {
   "name": "@cvbb/qr-protocol",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "description": "QRCode Protocol",
   "main": "dist/index.js",
   "types": "src/index.ts",
@@ -20,7 +20,7 @@
     "dist"
   ],
   "dependencies": {
-    "@cvbb/bc-ur": "^0.2.9",
+    "@cvbb/bc-ur": "^0.2.11",
     "@types/crypto-js": "^4.0.1",
     "crypto-js": "^4.0.0",
     "protobufjs": "^6.10.1"
@@ -42,5 +42,6 @@
   "homepage": "https://github.com/CoboVault/cobo-vault-blockchain-base#readme",
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "5afcf90b2b47d23aecfa56c73f6a0054da4cc8df"
 }

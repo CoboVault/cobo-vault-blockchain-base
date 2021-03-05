@@ -25,29 +25,51 @@ type StoredKeyring = {
 
 type PagedAccount = { address: string; balance: any; index: number };
 
+const readKeyringDescription = async (): Promise<{ xfp: string; xpub: string; hdPath: string }> => {
+    const decodedResult = await sdk.read();
+    const { type, result } = decodedResult;
+    if (type === 'json') {
+        const { xfp, xpub, path } = JSON.parse(result);
+        if (xfp && xpub && path) {
+            return {
+                xfp,
+                xpub,
+                hdPath: path,
+            };
+        }
+    } else if (type === 'none') {
+        throw new Error('reading keyring description qrcode process canceled');
+    }
+    throw new Error('invalid qrcode');
+};
+
 class AirGapedKeyring extends EventEmitter {
     static type = keyringType;
     static async getKeyring(): Promise<AirGapedKeyring> {
-        const decodedResult = await sdk.read();
-        if (decodedResult) {
-            if (decodedResult.type === 'json') {
-                // {xfp: "", xpub: "", path: ""}
-                const { xfp, xpub, path } = JSON.parse(decodedResult.result);
-                if (xfp && xpub && path) {
-                    return new AirGapedKeyring({
-                        xfp,
-                        xpub,
-                        hdPath: path,
-                        perPage: 5,
-                        page: 0,
-                        accounts: [],
-                        currentAccount: 0,
-                        paths: {},
-                    });
-                }
-            }
-        }
-        throw new Error('invalid qrcode');
+        const { xpub, xfp, hdPath } = await readKeyringDescription();
+        return new AirGapedKeyring({
+            xfp,
+            xpub,
+            hdPath,
+            perPage: 5,
+            page: 0,
+            accounts: [],
+            currentAccount: 0,
+            paths: {},
+        });
+    }
+
+    static getEmptyKeyring(): AirGapedKeyring {
+        return new AirGapedKeyring({
+            xfp: '',
+            xpub: '',
+            hdPath: '',
+            perPage: 5,
+            page: 0,
+            accounts: [],
+            currentAccount: 0,
+            paths: {},
+        });
     }
 
     private xfp: string;
@@ -73,6 +95,19 @@ class AirGapedKeyring extends EventEmitter {
         this.currentAccount = 0;
         this.paths = {};
         this.deserialize(opts);
+    }
+
+    async readKeyring(): Promise<void> {
+        const { xpub, xfp, hdPath } = await readKeyringDescription();
+        this.xfp = xfp;
+        this.xpub = xpub;
+        this.hdPath = hdPath;
+    }
+
+    private checkKeyring() {
+        if (!this.xfp || !this.xpub || !this.hdPath) {
+            throw new Error('keyring not fulfilled, please call function `readKeyring` firstly');
+        }
     }
 
     serialize(): Promise<StoredKeyring> {
@@ -220,61 +255,15 @@ class AirGapedKeyring extends EventEmitter {
         return tx;
     }
 
+    signMessage(withAccount: string, data: string): Promise<string> {
+        return this.signPersonalMessage(withAccount, data);
+    }
     //
-    // signMessage(withAccount, data) {
-    //   return this.signPersonalMessage(withAccount, data)
-    // }
-    //
-    // // For personal_sign, we need to prefix the message:
-    // signPersonalMessage(withAccount, message) {
-    //   return new Promise((resolve, reject) => {
-    //     this.unlock()
-    //       .then((status) => {
-    //         setTimeout(
-    //           (_) => {
-    //             TrezorConnect.ethereumSignMessage({
-    //               path: this._pathFromAddress(withAccount),
-    //               message: ethUtil.stripHexPrefix(message),
-    //               hex: true,
-    //             })
-    //               .then((response) => {
-    //                 if (response.success) {
-    //                   if (
-    //                     response.payload.address !==
-    //                     ethUtil.toChecksumAddress(withAccount)
-    //                   ) {
-    //                     reject(
-    //                       new Error('signature doesnt match the right address'),
-    //                     )
-    //                   }
-    //                   const signature = `0x${response.payload.signature}`
-    //                   resolve(signature)
-    //                 } else {
-    //                   reject(
-    //                     new Error(
-    //                       (response.payload && response.payload.error) ||
-    //                         'Unknown error',
-    //                     ),
-    //                   )
-    //                 }
-    //               })
-    //               .catch((e) => {
-    //                 console.log('Error while trying to sign a message ', e)
-    //                 reject(new Error((e && e.toString()) || 'Unknown error'))
-    //               })
-    //             // This is necessary to avoid popup collision
-    //             // between the unlock & sign trezor popups
-    //           },
-    //           status === 'just unlocked' ? DELAY_BETWEEN_POPUPS : 0,
-    //         )
-    //       })
-    //       .catch((e) => {
-    //         console.log('Error while trying to sign a message ', e)
-    //         reject(new Error((e && e.toString()) || 'Unknown error'))
-    //       })
-    //   })
-    // }
-    //
+    // For personal_sign, we need to prefix the message:
+    signPersonalMessage(withAccount: string, message: string): Promise<string> {
+        throw new Error('not implemented yet');
+    }
+
     async signTypedData(withAccount: string, typedData: any): Promise<Buffer> {
         const hdPath = this._pathFromAddress(withAccount);
         const signId = hash
@@ -294,6 +283,7 @@ class AirGapedKeyring extends EventEmitter {
     }
 
     _addressFromIndex(pb: string, i: number): string {
+        this.checkKeyring();
         if (!this.hdk) {
             this.hdk = HDKey.fromExtendedKey(this.xpub);
         }
