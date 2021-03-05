@@ -12,4 +12,4 @@ export type Play = (
     },
 ) => Promise<void>;
 
-export type Read = () => Promise<DecodedResult | undefined>;
+export type Read = () => Promise<DecodedResult>;
