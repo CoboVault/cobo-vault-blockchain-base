@@ -3,6 +3,9 @@
   "version": "1.0.3",
   "description": "eth-keyring interact with cobo vault",
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "clean": "rm -rf ./dist",
     "build": "npm run clean && npx tsc -p tsconfig.json -outDir ./dist"

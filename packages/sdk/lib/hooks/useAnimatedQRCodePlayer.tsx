@@ -10,6 +10,7 @@ import { ButtonGroup } from '../components/ButtonGroup';
 export const useAnimatedQRCodePlayer = (): [JSX.Element, { play: Play }] => {
     const [data, setData] = useState<string[]>([]);
     const [refreshSpeed, setRefreshSpeed] = useState(500);
+    const [hasNext, setHasNext] = useState(false);
     const [index, setIndex] = useState(0);
 
     const [isPause, setPause] = useState(false);
@@ -83,7 +84,7 @@ export const useAnimatedQRCodePlayer = (): [JSX.Element, { play: Play }] => {
                 <Button onClick={prev}>Prev</Button>
             </ButtonGroup>
             <ButtonGroup>
-                <Button onClick={finish}>Finish</Button>
+                <Button onClick={finish}>{hasNext ? 'Next' : 'Finish'}</Button>
             </ButtonGroup>
         </div>
     );
@@ -95,6 +96,7 @@ export const useAnimatedQRCodePlayer = (): [JSX.Element, { play: Play }] => {
                 data: string,
                 options?: {
                     refreshSpeed?: number;
+                    hasNext?: boolean;
                 },
             ) => {
                 return new Promise((resolve) => {
@@ -102,6 +104,7 @@ export const useAnimatedQRCodePlayer = (): [JSX.Element, { play: Play }] => {
                     setData(urs);
                     if (options) {
                         options.refreshSpeed && setRefreshSpeed(options.refreshSpeed);
+                        options.hasNext && setHasNext(options.hasNext);
                     }
                     ee.once('finish', () => {
                         reset();
