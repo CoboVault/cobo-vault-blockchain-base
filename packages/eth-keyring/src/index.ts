@@ -5,7 +5,7 @@ import hash from 'hash.js';
 // @ts-ignore
 import HDKey from 'hdkey';
 import sdk from '@cvbb/sdk';
-import ethUtil from 'ethereumjs-util';
+import { toChecksumAddress, publicToAddress, rlp, toBuffer, unpadBuffer } from 'ethereumjs-util';
 import { Transaction } from 'ethereumjs-tx';
 
 const keyringType = 'Air Gaped Device';
@@ -138,6 +138,14 @@ class AirGapedKeyring extends EventEmitter {
         this.currentAccount = index;
     }
 
+    getCurrentAccount(): number {
+        return this.currentAccount;
+    }
+
+    getCurrentAddress(): string {
+        return this.accounts[this.currentAccount];
+    }
+
     addAccounts(n = 1): Promise<string[]> {
         return new Promise((resolve, reject) => {
             try {
@@ -191,7 +199,7 @@ class AirGapedKeyring extends EventEmitter {
                         balance: null,
                         index: i,
                     });
-                    this.paths[ethUtil.toChecksumAddress(address)] = i;
+                    this.paths[toChecksumAddress(address)] = i;
                 }
                 resolve(accounts);
             } catch (e) {
@@ -200,8 +208,8 @@ class AirGapedKeyring extends EventEmitter {
         });
     }
 
-    getAccounts(): Promise<string[]> {
-        return Promise.resolve(this.accounts.slice());
+    getAccounts(): string[] {
+        return this.accounts;
     }
 
     removeAccount(address: string): void {
@@ -215,7 +223,9 @@ class AirGapedKeyring extends EventEmitter {
         const signature = await sdk.read();
         if (signature) {
             if (signature.type === 'ur') {
-                const { peerSignId, signatureHex } = JSON.parse(signature.result);
+                const { signId: peerSignId, signature: signatureHex } = JSON.parse(
+                    Buffer.from(signature.result, 'hex').toString('utf-8'),
+                );
                 if (peerSignId && signatureHex) {
                     if (peerSignId !== signId) {
                         throw new Error('read signature error: mismatched signId');
@@ -229,6 +239,7 @@ class AirGapedKeyring extends EventEmitter {
                         v,
                     };
                 }
+                throw new Error('invalid signature qrcode');
             } else {
                 throw new Error('invalid signature qrcode');
             }
@@ -236,9 +247,20 @@ class AirGapedKeyring extends EventEmitter {
         throw new Error('read signature canceled');
     }
     // tx is an instance of the ethereumjs-transaction class.
+
+    private static serializeTx(tx: Transaction): Buffer {
+        const items = [
+            ...tx.raw.slice(0, 6),
+            toBuffer(tx.getChainId()),
+            // TODO: stripping zeros should probably be a responsibility of the rlp module
+            unpadBuffer(toBuffer(0)),
+            unpadBuffer(toBuffer(0)),
+        ];
+        return rlp.encode(items);
+    }
+
     async signTransaction(address: string, tx: Transaction): Promise<Transaction> {
-        tx.v = Buffer.from([tx.getChainId()]);
-        const txHex = tx.serialize().toString('hex');
+        const txHex = AirGapedKeyring.serializeTx(tx).toString('hex');
         const hdPath = this._pathFromAddress(address);
         const signId = hash.sha256().update(`${txHex}${hdPath}${this.xfp}`).digest('hex').slice(0, 8);
         const signPayload = {
@@ -247,7 +269,7 @@ class AirGapedKeyring extends EventEmitter {
             hdPath,
             signId,
         };
-        await sdk.play(JSON.stringify(signPayload));
+        await sdk.play(Buffer.from(JSON.stringify(signPayload), 'utf-8').toString('hex'));
         const { r, s, v } = await this.readSignature(signId);
         tx.r = r;
         tx.s = s;
@@ -258,10 +280,19 @@ class AirGapedKeyring extends EventEmitter {
     signMessage(withAccount: string, data: string): Promise<string> {
         return this.signPersonalMessage(withAccount, data);
     }
-    //
-    // For personal_sign, we need to prefix the message:
-    signPersonalMessage(withAccount: string, message: string): Promise<string> {
-        throw new Error('not implemented yet');
+
+    async signPersonalMessage(withAccount: string, messageHex: string): Promise<string> {
+        const hdPath = this._pathFromAddress(withAccount);
+        const signId = hash.sha256().update(`${messageHex}${hdPath}${this.xfp}`).digest('hex').slice(0, 8);
+        const signPayload = {
+            messageHex,
+            xfp: this.xfp,
+            hdPath,
+            signId,
+        };
+        await sdk.play(Buffer.from(JSON.stringify(signPayload), 'utf-8').toString('hex'));
+        const { r, s, v } = await this.readSignature(signId);
+        return '0x' + r + s + v;
     }
 
     async signTypedData(withAccount: string, typedData: any): Promise<Buffer> {
@@ -277,7 +308,7 @@ class AirGapedKeyring extends EventEmitter {
             hdPath,
             signId,
         };
-        await sdk.play(JSON.stringify(signPayload));
+        await sdk.play(Buffer.from(JSON.stringify(signPayload), 'utf-8').toString('hex'));
         const { r, s, v } = await this.readSignature(signId);
         return Buffer.concat([r, s, v]);
     }
@@ -288,12 +319,12 @@ class AirGapedKeyring extends EventEmitter {
             this.hdk = HDKey.fromExtendedKey(this.xpub);
         }
         const dkey = this.hdk.derive(`${pb}/0/${i}`);
-        const address = ethUtil.publicToAddress(dkey.publicKey, true).toString('hex');
-        return ethUtil.toChecksumAddress(address);
+        const address = '0x' + publicToAddress(dkey.publicKey, true).toString('hex');
+        return toChecksumAddress(address);
     }
 
     _pathFromAddress(address: string): string {
-        const checksummedAddress = ethUtil.toChecksumAddress(address);
+        const checksummedAddress = toChecksumAddress(address);
         let index = this.paths[checksummedAddress];
         if (typeof index === 'undefined') {
             for (let i = 0; i < MAX_INDEX; i++) {
