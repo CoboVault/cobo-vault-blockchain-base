@@ -54,7 +54,7 @@ export const useController = (): [
                 data: string,
                 options?: {
                     refreshSpeed?: number;
-                    size?: number;
+                    hasNext?: boolean;
                 },
             ) => {
                 setVisible(true);
