@@ -1,6 +1,6 @@
 {
   "name": "@cvbb/eth-keyring",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "eth-keyring interact with cobo vault",
   "main": "dist/index.js",
   "files": [
@@ -16,7 +16,7 @@
   "author": "soralit <soralitria@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "@cvbb/sdk": "^1.1.0",
+    "@cvbb/sdk": "^1.1.1",
     "ethereumjs-tx": "^2.1.2",
     "ethereumjs-util": "^7.0.8",
     "hdkey": "^2.0.1"
