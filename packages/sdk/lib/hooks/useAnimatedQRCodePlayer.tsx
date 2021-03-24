@@ -88,7 +88,7 @@ export const useAnimatedQRCodePlayer = (): [JSX.Element, { play: Play }] => {
                 <Button onClick={prev}>Prev</Button>
             </ButtonGroup>
             <ButtonGroup>
-                <Button onClick={finish}>{hasNext ? 'Next' : 'Finish'}</Button>
+                <Button onClick={finish}>{hasNext ? 'Continue' : 'Finish'}</Button>
             </ButtonGroup>
         </div>
     );
