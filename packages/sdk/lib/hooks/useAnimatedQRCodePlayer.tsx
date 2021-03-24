@@ -12,6 +12,8 @@ export const useAnimatedQRCodePlayer = (): [JSX.Element, { play: Play }] => {
     const [refreshSpeed, setRefreshSpeed] = useState(500);
     const [hasNext, setHasNext] = useState(false);
     const [index, setIndex] = useState(0);
+    const [title, setTitle] = useState<string | null>(null);
+    const [description, setDescription] = useState<string | null>(null);
 
     const [isPause, setPause] = useState(false);
 
@@ -74,6 +76,8 @@ export const useAnimatedQRCodePlayer = (): [JSX.Element, { play: Play }] => {
                 alignItems: 'center',
             }}
         >
+            {title && <p>{title}</p>}
+            {description && <p>{description}</p>}
             <BaseQRCode size={288} data={splitArray[index]} />
             <p style={{ textAlign: 'center' }}>
                 {index + 1}/{splitArray.length}
@@ -92,19 +96,15 @@ export const useAnimatedQRCodePlayer = (): [JSX.Element, { play: Play }] => {
     return [
         element,
         {
-            play: (
-                data: string,
-                options?: {
-                    refreshSpeed?: number;
-                    hasNext?: boolean;
-                },
-            ) => {
+            play: (data, options) => {
                 return new Promise((resolve) => {
                     const urs = encodeUR(data, 800);
                     setData(urs);
                     if (options) {
                         options.refreshSpeed && setRefreshSpeed(options.refreshSpeed);
                         options.hasNext && setHasNext(options.hasNext);
+                        options.title && setTitle(options.title);
+                        options.description && setDescription(options.description);
                     }
                     ee.once('finish', () => {
                         reset();
