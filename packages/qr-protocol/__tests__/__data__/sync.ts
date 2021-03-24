@@ -198,7 +198,7 @@ export const sync = {
     deviceType: 'Cobo Vault Pro',
     data: {
         type: 1,
-        uuid: '4721d2b71e2a2393d58d8d4b3f16b8c4dac62b020d870504305e5aa792c2b59e',
+        xfp: '5271c071',
         sync: {
             coins: coins,
         },
