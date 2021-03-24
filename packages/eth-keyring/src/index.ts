@@ -82,6 +82,7 @@ class AirGapedKeyring extends EventEmitter {
     private perPage: number;
     private paths: Record<string, number>;
     private hdk: HDKey;
+    private latestAccount: number;
 
     constructor(opts: StoredKeyring) {
         super();
@@ -94,6 +95,7 @@ class AirGapedKeyring extends EventEmitter {
         this.accounts = [];
         this.currentAccount = 0;
         this.paths = {};
+        this.latestAccount = 0;
         this.deserialize(opts);
     }
 
@@ -149,15 +151,17 @@ class AirGapedKeyring extends EventEmitter {
     addAccounts(n = 1): Promise<string[]> {
         return new Promise((resolve, reject) => {
             try {
-                const from = this.currentAccount;
+                const from = this.latestAccount;
                 const to = from + n;
-                this.accounts = [];
+                const newAccounts = [];
 
                 for (let i = from; i < to; i++) {
                     const address = this._addressFromIndex(pathBase, i);
-                    this.accounts.push(address);
+                    newAccounts.push(address);
                     this.page = 0;
+                    this.latestAccount++;
                 }
+                this.accounts = this.accounts.concat(newAccounts);
                 resolve(this.accounts);
             } catch (e) {
                 reject(e);
@@ -269,7 +273,7 @@ class AirGapedKeyring extends EventEmitter {
             hdPath,
             signId,
         };
-        await sdk.play(Buffer.from(JSON.stringify(signPayload), 'utf-8').toString('hex'));
+        await sdk.play(Buffer.from(JSON.stringify(signPayload), 'utf-8').toString('hex'), { hasNext: true });
         const { r, s, v } = await this.readSignature(signId);
         tx.r = r;
         tx.s = s;
@@ -290,7 +294,7 @@ class AirGapedKeyring extends EventEmitter {
             hdPath,
             signId,
         };
-        await sdk.play(Buffer.from(JSON.stringify(signPayload), 'utf-8').toString('hex'));
+        await sdk.play(Buffer.from(JSON.stringify(signPayload), 'utf-8').toString('hex'), { hasNext: true });
         const { r, s, v } = await this.readSignature(signId);
         return '0x' + r + s + v;
     }
@@ -308,7 +312,7 @@ class AirGapedKeyring extends EventEmitter {
             hdPath,
             signId,
         };
-        await sdk.play(Buffer.from(JSON.stringify(signPayload), 'utf-8').toString('hex'));
+        await sdk.play(Buffer.from(JSON.stringify(signPayload), 'utf-8').toString('hex'), { hasNext: true });
         const { r, s, v } = await this.readSignature(signId);
         return Buffer.concat([r, s, v]);
     }

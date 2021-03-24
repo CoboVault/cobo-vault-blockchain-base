@@ -8,7 +8,7 @@ export type Play = (
     data: string,
     options?: {
         refreshSpeed?: number;
-        size?: number;
+        hasNext?: boolean;
     },
 ) => Promise<void>;
 
