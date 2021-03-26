@@ -1,6 +1,6 @@
 {
   "name": "@cvbb/qr-protocol",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "QRCode Protocol",
   "main": "dist/index.js",
   "types": "src/index.ts",
