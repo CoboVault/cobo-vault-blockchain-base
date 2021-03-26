@@ -44,4 +44,6 @@ const decodeProtobufByURDecoder = () => {
 export default {
     encodeProtobufByUREncoder,
     decodeProtobufByURDecoder,
+    encodeByUREncoder,
+    decodeByURDecoder,
 };
