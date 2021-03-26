@@ -35,8 +35,7 @@ const decodeProtobufByURDecoder = () => {
         ...decoder,
         result: () => {
             const ur = decoder.result();
-            const payload = ur.decodeCBOR();
-            return decode(payload);
+            return decode(ur.decodeCBOR());
         },
     };
 };
