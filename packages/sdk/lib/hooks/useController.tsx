@@ -51,11 +51,8 @@ export const useController = (): [
         element,
         {
             play: async (
-                data: string,
-                options?: {
-                    refreshSpeed?: number;
-                    hasNext?: boolean;
-                },
+                data,
+                options,
             ) => {
                 setVisible(true);
                 setMode('play');
@@ -63,10 +60,10 @@ export const useController = (): [
                 reset();
                 return;
             },
-            read: async () => {
+            read: async (options) => {
                 setVisible(true);
                 setMode('read');
-                const result = await read();
+                const result = await read(options);
                 reset();
                 return result;
             },

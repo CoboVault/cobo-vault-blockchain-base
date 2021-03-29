@@ -9,7 +9,9 @@ export type Play = (
     options?: {
         refreshSpeed?: number;
         hasNext?: boolean;
+        title?: string;
+        description?: string;
     },
 ) => Promise<void>;
 
-export type Read = () => Promise<DecodedResult>;
+export type Read = (options?: { title?: string; description?: string }) => Promise<DecodedResult>;

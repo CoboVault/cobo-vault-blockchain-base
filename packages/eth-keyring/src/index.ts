@@ -26,7 +26,10 @@ type StoredKeyring = {
 type PagedAccount = { address: string; balance: any; index: number };
 
 const readKeyringDescription = async (): Promise<{ xfp: string; xpub: string; hdPath: string }> => {
-    const decodedResult = await sdk.read();
+    const decodedResult = await sdk.read({
+        title: 'Sync Cobo Vault',
+        description: "Please click 'Sync' in Cobo Vault and scan the QR code displayed later",
+    });
     const { type, result } = decodedResult;
     if (type === 'json') {
         const { xfp, xpub, path } = JSON.parse(result);
@@ -38,9 +41,9 @@ const readKeyringDescription = async (): Promise<{ xfp: string; xpub: string; hd
             };
         }
     } else if (type === 'none') {
-        throw new Error('reading keyring description qrcode process canceled');
+        throw new Error('Reading canceled');
     }
-    throw new Error('invalid qrcode');
+    throw new Error('Invalid qrcode');
 };
 
 class AirGapedKeyring extends EventEmitter {
@@ -224,7 +227,10 @@ class AirGapedKeyring extends EventEmitter {
     }
 
     async readSignature(signId: string): Promise<{ r: Buffer; s: Buffer; v: Buffer }> {
-        const signature = await sdk.read();
+        const signature = await sdk.read({
+            title: 'Submit signing result',
+            description: 'Please scan signing result QR code displayed on your Cobo Vault',
+        });
         if (signature) {
             if (signature.type === 'ur') {
                 const { signId: peerSignId, signature: signatureHex } = JSON.parse(
@@ -273,7 +279,12 @@ class AirGapedKeyring extends EventEmitter {
             hdPath,
             signId,
         };
-        await sdk.play(Buffer.from(JSON.stringify(signPayload), 'utf-8').toString('hex'), { hasNext: true });
+        await sdk.play(Buffer.from(JSON.stringify(signPayload), 'utf-8').toString('hex'), {
+            hasNext: true,
+            title: 'Request signing transaction',
+            description:
+                'Please scan the QR code below with Cobo Vault, review transaction information and authorize to sign',
+        });
         const { r, s, v } = await this.readSignature(signId);
         tx.r = r;
         tx.s = s;
@@ -294,7 +305,11 @@ class AirGapedKeyring extends EventEmitter {
             hdPath,
             signId,
         };
-        await sdk.play(Buffer.from(JSON.stringify(signPayload), 'utf-8').toString('hex'), { hasNext: true });
+        await sdk.play(Buffer.from(JSON.stringify(signPayload), 'utf-8').toString('hex'), {
+            hasNext: true,
+            title: 'Request signing message',
+            description: 'Please scan the QR code below with Cobo Vault, review message and authorize to sign',
+        });
         const { r, s, v } = await this.readSignature(signId);
         return '0x' + r + s + v;
     }
@@ -312,7 +327,11 @@ class AirGapedKeyring extends EventEmitter {
             hdPath,
             signId,
         };
-        await sdk.play(Buffer.from(JSON.stringify(signPayload), 'utf-8').toString('hex'), { hasNext: true });
+        await sdk.play(Buffer.from(JSON.stringify(signPayload), 'utf-8').toString('hex'), {
+            hasNext: true,
+            title: 'Request signing typed data',
+            description: 'Please scan the QR code below with Cobo Vault, review data and authorize to sign',
+        });
         const { r, s, v } = await this.readSignature(signId);
         return Buffer.concat([r, s, v]);
     }

@@ -1,6 +1,6 @@
 {
   "name": "@cvbb/qr-protocol",
-  "version": "1.0.0",
+  "version": "2.0.3",
   "description": "QRCode Protocol",
   "main": "dist/index.js",
   "types": "src/index.ts",
@@ -20,7 +20,8 @@
     "dist"
   ],
   "dependencies": {
-    "@cvbb/bc-ur": "^0.2.13",
+    "@apocentre/bc-ur": "^1.1.0",
+    "@cvbb/bc-ur": "^0.2.14",
     "@types/crypto-js": "^4.0.1",
     "crypto-js": "^4.0.0",
     "protobufjs": "^6.10.1"

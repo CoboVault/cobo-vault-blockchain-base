@@ -18,6 +18,8 @@ export const useAnimatedQRCodeReader = (): [JSX.Element, { read: Read }] => {
     const [urCodes, setURCodes] = useState<URQRCodeData[]>([]);
     const [error, setError] = useState('');
     const ee = useMemo(() => new EventEmitter(), []);
+    const [title, setTitle] = useState<string | null>(null);
+    const [description, setDescription] = useState<string | null>(null);
     const reset = () => {
         setURCodes([]);
         setError('');
@@ -94,6 +96,8 @@ export const useAnimatedQRCodeReader = (): [JSX.Element, { read: Read }] => {
                 alignItems: 'center',
             }}
         >
+            {title && <p>{title}</p>}
+            {description && <p>{description}</p>}
             <QrReader
                 onScan={(data: any) => {
                     if (data) {
@@ -120,8 +124,13 @@ export const useAnimatedQRCodeReader = (): [JSX.Element, { read: Read }] => {
     return [
         element,
         {
-            read: () => {
+            read: (options) => {
                 return new Promise((resolve) => {
+                    console.log(options);
+                    if (options) {
+                        options.title && setTitle(options.title);
+                        options.description && setDescription(options.description);
+                    }
                     ee.once('read', (result) => {
                         reset();
                         resolve(result);
