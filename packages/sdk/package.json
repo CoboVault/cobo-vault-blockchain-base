@@ -27,7 +27,7 @@
     "url": "https://github.com/CoboVault/cobo-vault-blockchain-base/issues"
   },
   "dependencies": {
-    "@cvbb/bc-ur": "^0.2.14",
+    "@cvbb/qr-protocol": "^2.0.3",
     "@types/qrcode.react": "^1.0.1",
     "@types/react-dom": "^17.0.1",
     "@types/react-modal": "^3.12.0",

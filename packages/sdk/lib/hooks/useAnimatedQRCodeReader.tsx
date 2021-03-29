@@ -1,12 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import QrReader from 'react-qr-reader';
-import { decodeUR, extractSingleWorkload } from '@cvbb/bc-ur';
 import { EventEmitter } from 'events';
 import { Button } from '../components/Button';
 
-import { Progress } from '../components/Progress';
 import { Read } from '../types';
 import { ButtonGroup } from '../components/ButtonGroup';
+
+import { UR } from '@cvbb/qr-protocol';
 
 export interface URQRCodeData {
     total: number;
@@ -15,13 +15,14 @@ export interface URQRCodeData {
 }
 
 export const useAnimatedQRCodeReader = (): [JSX.Element, { read: Read }] => {
-    const [urCodes, setURCodes] = useState<URQRCodeData[]>([]);
+    const [urDecoder, setURDecoder] = useState(UR.decodeByURDecoder());
     const [error, setError] = useState('');
     const ee = useMemo(() => new EventEmitter(), []);
     const [title, setTitle] = useState<string | null>(null);
+    const [progress, setProgress] = useState(0);
     const [description, setDescription] = useState<string | null>(null);
     const reset = () => {
-        setURCodes([]);
+        setURDecoder(UR.decodeByURDecoder());
         setError('');
     };
 
@@ -30,7 +31,7 @@ export const useAnimatedQRCodeReader = (): [JSX.Element, { read: Read }] => {
             processJSON(qr);
         } catch (e1) {
             try {
-                processUR(qr);
+                processUR(qr.toLocaleLowerCase());
             } catch (e2) {
                 processText(qr);
             }
@@ -65,23 +66,15 @@ export const useAnimatedQRCodeReader = (): [JSX.Element, { read: Read }] => {
 
     const processUR = (ur: string) => {
         try {
-            const [index, total] = extractSingleWorkload(ur);
-            if (urCodes.length > 0) {
-                const currentTotal = urCodes[0].total;
-                if (total !== currentTotal) {
-                    setError('invalid animated qrcode: mismatching qrs, please retry');
-                }
-            }
-            if (!urCodes.find((item) => item.index === index)) {
-                const newCodes = [...urCodes, { index, total, data: ur }];
-                setURCodes(newCodes);
-                if (newCodes.length === total) {
-                    const result = decodeUR(newCodes.map((item) => item.data));
-                    ee.emit('read', {
-                        type: 'ur',
-                        result,
-                    });
-                }
+            if (!urDecoder.isComplete()) {
+                urDecoder.receivePart(ur);
+                setProgress(urDecoder.getProgress());
+            } else {
+                const result = urDecoder.result().decodeCBOR().toString('hex');
+                ee.emit('read', {
+                    type: 'ur',
+                    result,
+                });
             }
         } catch (e) {
             setError(e.message);
@@ -110,9 +103,7 @@ export const useAnimatedQRCodeReader = (): [JSX.Element, { read: Read }] => {
                     setError(e.message);
                 }}
             />
-            <p>
-                {urCodes[0] && urCodes[0].total > 1 && <Progress progress={urCodes.length} total={urCodes[0].total} />}
-            </p>
+            <p>Current Progress: {(progress * 100).toFixed(0)} %</p>
             <ButtonGroup>
                 <Button onClick={handleStop}>Close</Button>
                 {error && <Button onClick={handleRetry}>Retry</Button>}
@@ -126,7 +117,6 @@ export const useAnimatedQRCodeReader = (): [JSX.Element, { read: Read }] => {
         {
             read: (options) => {
                 return new Promise((resolve) => {
-                    console.log(options);
                     if (options) {
                         options.title && setTitle(options.title);
                         options.description && setDescription(options.description);
