@@ -1,5 +1,4 @@
 import { UR } from '../src/QRProtocolCodec';
-import { encode } from '../src/QRProtocolCodec/encode';
 import { decodedSync } from './__data__/decodedSync';
 import { sync } from './__data__/sync';
 
@@ -11,13 +10,10 @@ const qrs = [
 ];
 
 describe('QRCodeProtocol UR', () => {
-    it('should encode QR code', () => {
+    it('should encode and decode QR code', () => {
         const encoder = UR.encodeProtobufByUREncoder(sync);
-        expect(encoder.encodeWhole()).toStrictEqual(qrs);
-    });
-
-    it('should decode QR code', () => {
         const decoder = UR.decodeProtobufByURDecoder();
+        const qrs = encoder.encodeWhole();
         qrs.forEach((qr) => decoder.receivePart(qr));
         expect(decoder.result().toJSON()).toStrictEqual(decodedSync);
     });
