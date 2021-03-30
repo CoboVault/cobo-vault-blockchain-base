@@ -1,20 +1,22 @@
 /*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
-import * as $protobuf from "protobufjs/minimal";
+"use strict";
+
+var $protobuf = require("protobufjs/minimal");
 
 // Common aliases
-const $Reader = $protobuf.Reader, $Writer = $protobuf.Writer, $util = $protobuf.util;
+var $Reader = $protobuf.Reader, $Writer = $protobuf.Writer, $util = $protobuf.util;
 
 // Exported root namespace
-const $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
+var $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
 
-export const protoc = $root.protoc = (() => {
+$root.protoc = (function() {
 
     /**
      * Namespace protoc.
      * @exports protoc
      * @namespace
      */
-    const protoc = {};
+    var protoc = {};
 
     protoc.Base = (function() {
 
@@ -40,7 +42,7 @@ export const protoc = $root.protoc = (() => {
          */
         function Base(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -94,7 +96,7 @@ export const protoc = $root.protoc = (() => {
         Base.prototype.deviceType = "";
 
         // OneOf field names bound to virtual getters and setters
-        let $oneOfFields;
+        var $oneOfFields;
 
         /**
          * Base Content.
@@ -173,9 +175,9 @@ export const protoc = $root.protoc = (() => {
         Base.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.Base();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.Base();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.version = reader.int32();
@@ -230,7 +232,7 @@ export const protoc = $root.protoc = (() => {
         Base.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            let properties = {};
+            var properties = {};
             if (message.version != null && message.hasOwnProperty("version"))
                 if (!$util.isInteger(message.version))
                     return "version: integer expected";
@@ -238,7 +240,7 @@ export const protoc = $root.protoc = (() => {
                 if (!$util.isString(message.description))
                     return "description: string expected";
             if (message.data != null && message.hasOwnProperty("data")) {
-                let error = $root.protoc.Payload.verify(message.data);
+                var error = $root.protoc.Payload.verify(message.data);
                 if (error)
                     return "data." + error;
             }
@@ -271,7 +273,7 @@ export const protoc = $root.protoc = (() => {
         Base.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.Base)
                 return object;
-            let message = new $root.protoc.Base();
+            var message = new $root.protoc.Base();
             if (object.version != null)
                 message.version = object.version | 0;
             if (object.description != null)
@@ -302,7 +304,7 @@ export const protoc = $root.protoc = (() => {
         Base.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.version = 0;
                 object.description = "";
@@ -369,7 +371,7 @@ export const protoc = $root.protoc = (() => {
          */
         function Payload(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -431,7 +433,7 @@ export const protoc = $root.protoc = (() => {
         Payload.prototype.signTxResult = null;
 
         // OneOf field names bound to virtual getters and setters
-        let $oneOfFields;
+        var $oneOfFields;
 
         /**
          * Payload Content.
@@ -512,9 +514,9 @@ export const protoc = $root.protoc = (() => {
         Payload.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.Payload();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.Payload();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.type = reader.int32();
@@ -572,7 +574,7 @@ export const protoc = $root.protoc = (() => {
         Payload.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            let properties = {};
+            var properties = {};
             if (message.type != null && message.hasOwnProperty("type"))
                 switch (message.type) {
                 default:
@@ -595,7 +597,7 @@ export const protoc = $root.protoc = (() => {
             if (message.sync != null && message.hasOwnProperty("sync")) {
                 properties.Content = 1;
                 {
-                    let error = $root.protoc.Sync.verify(message.sync);
+                    var error = $root.protoc.Sync.verify(message.sync);
                     if (error)
                         return "sync." + error;
                 }
@@ -605,7 +607,7 @@ export const protoc = $root.protoc = (() => {
                     return "Content: multiple values";
                 properties.Content = 1;
                 {
-                    let error = $root.protoc.SignTransaction.verify(message.signTx);
+                    var error = $root.protoc.SignTransaction.verify(message.signTx);
                     if (error)
                         return "signTx." + error;
                 }
@@ -615,7 +617,7 @@ export const protoc = $root.protoc = (() => {
                     return "Content: multiple values";
                 properties.Content = 1;
                 {
-                    let error = $root.protoc.SignMessage.verify(message.signMsg);
+                    var error = $root.protoc.SignMessage.verify(message.signMsg);
                     if (error)
                         return "signMsg." + error;
                 }
@@ -625,7 +627,7 @@ export const protoc = $root.protoc = (() => {
                     return "Content: multiple values";
                 properties.Content = 1;
                 {
-                    let error = $root.protoc.VerifyAddress.verify(message.verifyAddr);
+                    var error = $root.protoc.VerifyAddress.verify(message.verifyAddr);
                     if (error)
                         return "verifyAddr." + error;
                 }
@@ -635,7 +637,7 @@ export const protoc = $root.protoc = (() => {
                     return "Content: multiple values";
                 properties.Content = 1;
                 {
-                    let error = $root.protoc.SignTransactionResult.verify(message.signTxResult);
+                    var error = $root.protoc.SignTransactionResult.verify(message.signTxResult);
                     if (error)
                         return "signTxResult." + error;
                 }
@@ -654,7 +656,7 @@ export const protoc = $root.protoc = (() => {
         Payload.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.Payload)
                 return object;
-            let message = new $root.protoc.Payload();
+            var message = new $root.protoc.Payload();
             switch (object.type) {
             case "TYPE_RESERVE":
             case 0:
@@ -739,7 +741,7 @@ export const protoc = $root.protoc = (() => {
         Payload.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.type = options.enums === String ? "TYPE_RESERVE" : 0;
                 object.xfp = "";
@@ -803,7 +805,7 @@ export const protoc = $root.protoc = (() => {
          * @property {number} TYPE_SIGN_TX_RESULT=9 TYPE_SIGN_TX_RESULT value
          */
         Payload.Type = (function() {
-            const valuesById = {}, values = Object.create(valuesById);
+            var valuesById = {}, values = Object.create(valuesById);
             values[valuesById[0] = "TYPE_RESERVE"] = 0;
             values[valuesById[1] = "TYPE_SYNC"] = 1;
             values[valuesById[2] = "TYPE_SIGN_TX"] = 2;
@@ -842,7 +844,7 @@ export const protoc = $root.protoc = (() => {
          */
         function Account(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -941,9 +943,9 @@ export const protoc = $root.protoc = (() => {
         Account.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.Account();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.Account();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.hdPath = reader.string();
@@ -1018,7 +1020,7 @@ export const protoc = $root.protoc = (() => {
         Account.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.Account)
                 return object;
-            let message = new $root.protoc.Account();
+            var message = new $root.protoc.Account();
             if (object.hdPath != null)
                 message.hdPath = String(object.hdPath);
             if (object.xPub != null)
@@ -1042,7 +1044,7 @@ export const protoc = $root.protoc = (() => {
         Account.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.hdPath = "";
                 object.xPub = "";
@@ -1096,7 +1098,7 @@ export const protoc = $root.protoc = (() => {
         function Coin(properties) {
             this.accounts = [];
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -1154,7 +1156,7 @@ export const protoc = $root.protoc = (() => {
             if (message.active != null && Object.hasOwnProperty.call(message, "active"))
                 writer.uint32(/* id 2, wireType 0 =*/16).bool(message.active);
             if (message.accounts != null && message.accounts.length)
-                for (let i = 0; i < message.accounts.length; ++i)
+                for (var i = 0; i < message.accounts.length; ++i)
                     $root.protoc.Account.encode(message.accounts[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
             return writer;
         };
@@ -1186,9 +1188,9 @@ export const protoc = $root.protoc = (() => {
         Coin.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.Coin();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.Coin();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.coinCode = reader.string();
@@ -1245,8 +1247,8 @@ export const protoc = $root.protoc = (() => {
             if (message.accounts != null && message.hasOwnProperty("accounts")) {
                 if (!Array.isArray(message.accounts))
                     return "accounts: array expected";
-                for (let i = 0; i < message.accounts.length; ++i) {
-                    let error = $root.protoc.Account.verify(message.accounts[i]);
+                for (var i = 0; i < message.accounts.length; ++i) {
+                    var error = $root.protoc.Account.verify(message.accounts[i]);
                     if (error)
                         return "accounts." + error;
                 }
@@ -1265,7 +1267,7 @@ export const protoc = $root.protoc = (() => {
         Coin.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.Coin)
                 return object;
-            let message = new $root.protoc.Coin();
+            var message = new $root.protoc.Coin();
             if (object.coinCode != null)
                 message.coinCode = String(object.coinCode);
             if (object.active != null)
@@ -1274,7 +1276,7 @@ export const protoc = $root.protoc = (() => {
                 if (!Array.isArray(object.accounts))
                     throw TypeError(".protoc.Coin.accounts: array expected");
                 message.accounts = [];
-                for (let i = 0; i < object.accounts.length; ++i) {
+                for (var i = 0; i < object.accounts.length; ++i) {
                     if (typeof object.accounts[i] !== "object")
                         throw TypeError(".protoc.Coin.accounts: object expected");
                     message.accounts[i] = $root.protoc.Account.fromObject(object.accounts[i]);
@@ -1295,7 +1297,7 @@ export const protoc = $root.protoc = (() => {
         Coin.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.arrays || options.defaults)
                 object.accounts = [];
             if (options.defaults) {
@@ -1308,7 +1310,7 @@ export const protoc = $root.protoc = (() => {
                 object.active = message.active;
             if (message.accounts && message.accounts.length) {
                 object.accounts = [];
-                for (let j = 0; j < message.accounts.length; ++j)
+                for (var j = 0; j < message.accounts.length; ++j)
                     object.accounts[j] = $root.protoc.Account.toObject(message.accounts[j], options);
             }
             return object;
@@ -1348,7 +1350,7 @@ export const protoc = $root.protoc = (() => {
         function Sync(properties) {
             this.coins = [];
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -1386,7 +1388,7 @@ export const protoc = $root.protoc = (() => {
             if (!writer)
                 writer = $Writer.create();
             if (message.coins != null && message.coins.length)
-                for (let i = 0; i < message.coins.length; ++i)
+                for (var i = 0; i < message.coins.length; ++i)
                     $root.protoc.Coin.encode(message.coins[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             return writer;
         };
@@ -1418,9 +1420,9 @@ export const protoc = $root.protoc = (() => {
         Sync.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.Sync();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.Sync();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     if (!(message.coins && message.coins.length))
@@ -1465,8 +1467,8 @@ export const protoc = $root.protoc = (() => {
             if (message.coins != null && message.hasOwnProperty("coins")) {
                 if (!Array.isArray(message.coins))
                     return "coins: array expected";
-                for (let i = 0; i < message.coins.length; ++i) {
-                    let error = $root.protoc.Coin.verify(message.coins[i]);
+                for (var i = 0; i < message.coins.length; ++i) {
+                    var error = $root.protoc.Coin.verify(message.coins[i]);
                     if (error)
                         return "coins." + error;
                 }
@@ -1485,12 +1487,12 @@ export const protoc = $root.protoc = (() => {
         Sync.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.Sync)
                 return object;
-            let message = new $root.protoc.Sync();
+            var message = new $root.protoc.Sync();
             if (object.coins) {
                 if (!Array.isArray(object.coins))
                     throw TypeError(".protoc.Sync.coins: array expected");
                 message.coins = [];
-                for (let i = 0; i < object.coins.length; ++i) {
+                for (var i = 0; i < object.coins.length; ++i) {
                     if (typeof object.coins[i] !== "object")
                         throw TypeError(".protoc.Sync.coins: object expected");
                     message.coins[i] = $root.protoc.Coin.fromObject(object.coins[i]);
@@ -1511,12 +1513,12 @@ export const protoc = $root.protoc = (() => {
         Sync.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.arrays || options.defaults)
                 object.coins = [];
             if (message.coins && message.coins.length) {
                 object.coins = [];
-                for (let j = 0; j < message.coins.length; ++j)
+                for (var j = 0; j < message.coins.length; ++j)
                     object.coins[j] = $root.protoc.Coin.toObject(message.coins[j], options);
             }
             return object;
@@ -1575,7 +1577,7 @@ export const protoc = $root.protoc = (() => {
          */
         function SignTransaction(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -1749,7 +1751,7 @@ export const protoc = $root.protoc = (() => {
         SignTransaction.prototype.cfxTx = null;
 
         // OneOf field names bound to virtual getters and setters
-        let $oneOfFields;
+        var $oneOfFields;
 
         /**
          * SignTransaction Transaction.
@@ -1858,9 +1860,9 @@ export const protoc = $root.protoc = (() => {
         SignTransaction.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.SignTransaction();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.SignTransaction();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.coinCode = reader.string();
@@ -1960,7 +1962,7 @@ export const protoc = $root.protoc = (() => {
         SignTransaction.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            let properties = {};
+            var properties = {};
             if (message.coinCode != null && message.hasOwnProperty("coinCode"))
                 if (!$util.isString(message.coinCode))
                     return "coinCode: string expected";
@@ -1979,7 +1981,7 @@ export const protoc = $root.protoc = (() => {
             if (message.btcTx != null && message.hasOwnProperty("btcTx")) {
                 properties.Transaction = 1;
                 {
-                    let error = $root.protoc.BtcTx.verify(message.btcTx);
+                    var error = $root.protoc.BtcTx.verify(message.btcTx);
                     if (error)
                         return "btcTx." + error;
                 }
@@ -1989,7 +1991,7 @@ export const protoc = $root.protoc = (() => {
                     return "Transaction: multiple values";
                 properties.Transaction = 1;
                 {
-                    let error = $root.protoc.EthTx.verify(message.ethTx);
+                    var error = $root.protoc.EthTx.verify(message.ethTx);
                     if (error)
                         return "ethTx." + error;
                 }
@@ -1999,7 +2001,7 @@ export const protoc = $root.protoc = (() => {
                     return "Transaction: multiple values";
                 properties.Transaction = 1;
                 {
-                    let error = $root.protoc.TronTx.verify(message.tronTx);
+                    var error = $root.protoc.TronTx.verify(message.tronTx);
                     if (error)
                         return "tronTx." + error;
                 }
@@ -2009,7 +2011,7 @@ export const protoc = $root.protoc = (() => {
                     return "Transaction: multiple values";
                 properties.Transaction = 1;
                 {
-                    let error = $root.protoc.EtcTx.verify(message.etcTx);
+                    var error = $root.protoc.EtcTx.verify(message.etcTx);
                     if (error)
                         return "etcTx." + error;
                 }
@@ -2019,7 +2021,7 @@ export const protoc = $root.protoc = (() => {
                     return "Transaction: multiple values";
                 properties.Transaction = 1;
                 {
-                    let error = $root.protoc.BchTx.verify(message.bchTx);
+                    var error = $root.protoc.BchTx.verify(message.bchTx);
                     if (error)
                         return "bchTx." + error;
                 }
@@ -2029,7 +2031,7 @@ export const protoc = $root.protoc = (() => {
                     return "Transaction: multiple values";
                 properties.Transaction = 1;
                 {
-                    let error = $root.protoc.DashTx.verify(message.dashTx);
+                    var error = $root.protoc.DashTx.verify(message.dashTx);
                     if (error)
                         return "dashTx." + error;
                 }
@@ -2039,7 +2041,7 @@ export const protoc = $root.protoc = (() => {
                     return "Transaction: multiple values";
                 properties.Transaction = 1;
                 {
-                    let error = $root.protoc.LtcTx.verify(message.ltcTx);
+                    var error = $root.protoc.LtcTx.verify(message.ltcTx);
                     if (error)
                         return "ltcTx." + error;
                 }
@@ -2049,7 +2051,7 @@ export const protoc = $root.protoc = (() => {
                     return "Transaction: multiple values";
                 properties.Transaction = 1;
                 {
-                    let error = $root.protoc.DcrTx.verify(message.dcrTx);
+                    var error = $root.protoc.DcrTx.verify(message.dcrTx);
                     if (error)
                         return "dcrTx." + error;
                 }
@@ -2059,7 +2061,7 @@ export const protoc = $root.protoc = (() => {
                     return "Transaction: multiple values";
                 properties.Transaction = 1;
                 {
-                    let error = $root.protoc.XzcTx.verify(message.xzcTx);
+                    var error = $root.protoc.XzcTx.verify(message.xzcTx);
                     if (error)
                         return "xzcTx." + error;
                 }
@@ -2069,7 +2071,7 @@ export const protoc = $root.protoc = (() => {
                     return "Transaction: multiple values";
                 properties.Transaction = 1;
                 {
-                    let error = $root.protoc.XrpTx.verify(message.xrpTx);
+                    var error = $root.protoc.XrpTx.verify(message.xrpTx);
                     if (error)
                         return "xrpTx." + error;
                 }
@@ -2079,7 +2081,7 @@ export const protoc = $root.protoc = (() => {
                     return "Transaction: multiple values";
                 properties.Transaction = 1;
                 {
-                    let error = $root.protoc.IostTx.verify(message.iostTx);
+                    var error = $root.protoc.IostTx.verify(message.iostTx);
                     if (error)
                         return "iostTx." + error;
                 }
@@ -2089,7 +2091,7 @@ export const protoc = $root.protoc = (() => {
                     return "Transaction: multiple values";
                 properties.Transaction = 1;
                 {
-                    let error = $root.protoc.OmniTx.verify(message.omniTx);
+                    var error = $root.protoc.OmniTx.verify(message.omniTx);
                     if (error)
                         return "omniTx." + error;
                 }
@@ -2099,7 +2101,7 @@ export const protoc = $root.protoc = (() => {
                     return "Transaction: multiple values";
                 properties.Transaction = 1;
                 {
-                    let error = $root.protoc.EosTx.verify(message.eosTx);
+                    var error = $root.protoc.EosTx.verify(message.eosTx);
                     if (error)
                         return "eosTx." + error;
                 }
@@ -2109,7 +2111,7 @@ export const protoc = $root.protoc = (() => {
                     return "Transaction: multiple values";
                 properties.Transaction = 1;
                 {
-                    let error = $root.protoc.DotTx.verify(message.dotTx);
+                    var error = $root.protoc.DotTx.verify(message.dotTx);
                     if (error)
                         return "dotTx." + error;
                 }
@@ -2119,7 +2121,7 @@ export const protoc = $root.protoc = (() => {
                     return "Transaction: multiple values";
                 properties.Transaction = 1;
                 {
-                    let error = $root.protoc.KsmTx.verify(message.ksmTx);
+                    var error = $root.protoc.KsmTx.verify(message.ksmTx);
                     if (error)
                         return "ksmTx." + error;
                 }
@@ -2129,7 +2131,7 @@ export const protoc = $root.protoc = (() => {
                     return "Transaction: multiple values";
                 properties.Transaction = 1;
                 {
-                    let error = $root.protoc.CfxTx.verify(message.cfxTx);
+                    var error = $root.protoc.CfxTx.verify(message.cfxTx);
                     if (error)
                         return "cfxTx." + error;
                 }
@@ -2148,7 +2150,7 @@ export const protoc = $root.protoc = (() => {
         SignTransaction.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.SignTransaction)
                 return object;
-            let message = new $root.protoc.SignTransaction();
+            var message = new $root.protoc.SignTransaction();
             if (object.coinCode != null)
                 message.coinCode = String(object.coinCode);
             if (object.signId != null)
@@ -2261,13 +2263,13 @@ export const protoc = $root.protoc = (() => {
         SignTransaction.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.coinCode = "";
                 object.signId = "";
                 object.hdPath = "";
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.timestamp = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.timestamp = options.longs === String ? "0" : 0;
@@ -2409,7 +2411,7 @@ export const protoc = $root.protoc = (() => {
             this.inputs = [];
             this.outputs = [];
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -2493,10 +2495,10 @@ export const protoc = $root.protoc = (() => {
             if (message.memo != null && Object.hasOwnProperty.call(message, "memo"))
                 writer.uint32(/* id 3, wireType 2 =*/26).string(message.memo);
             if (message.inputs != null && message.inputs.length)
-                for (let i = 0; i < message.inputs.length; ++i)
+                for (var i = 0; i < message.inputs.length; ++i)
                     $root.protoc.Input.encode(message.inputs[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
             if (message.outputs != null && message.outputs.length)
-                for (let i = 0; i < message.outputs.length; ++i)
+                for (var i = 0; i < message.outputs.length; ++i)
                     $root.protoc.Output.encode(message.outputs[i], writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
             if (message.omni != null && Object.hasOwnProperty.call(message, "omni"))
                 $root.protoc.Omni.encode(message.omni, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
@@ -2530,9 +2532,9 @@ export const protoc = $root.protoc = (() => {
         BtcTx.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.BtcTx();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.BtcTx();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.fee = reader.int64();
@@ -2603,8 +2605,8 @@ export const protoc = $root.protoc = (() => {
             if (message.inputs != null && message.hasOwnProperty("inputs")) {
                 if (!Array.isArray(message.inputs))
                     return "inputs: array expected";
-                for (let i = 0; i < message.inputs.length; ++i) {
-                    let error = $root.protoc.Input.verify(message.inputs[i]);
+                for (var i = 0; i < message.inputs.length; ++i) {
+                    var error = $root.protoc.Input.verify(message.inputs[i]);
                     if (error)
                         return "inputs." + error;
                 }
@@ -2612,14 +2614,14 @@ export const protoc = $root.protoc = (() => {
             if (message.outputs != null && message.hasOwnProperty("outputs")) {
                 if (!Array.isArray(message.outputs))
                     return "outputs: array expected";
-                for (let i = 0; i < message.outputs.length; ++i) {
-                    let error = $root.protoc.Output.verify(message.outputs[i]);
+                for (var i = 0; i < message.outputs.length; ++i) {
+                    var error = $root.protoc.Output.verify(message.outputs[i]);
                     if (error)
                         return "outputs." + error;
                 }
             }
             if (message.omni != null && message.hasOwnProperty("omni")) {
-                let error = $root.protoc.Omni.verify(message.omni);
+                var error = $root.protoc.Omni.verify(message.omni);
                 if (error)
                     return "omni." + error;
             }
@@ -2637,7 +2639,7 @@ export const protoc = $root.protoc = (() => {
         BtcTx.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.BtcTx)
                 return object;
-            let message = new $root.protoc.BtcTx();
+            var message = new $root.protoc.BtcTx();
             if (object.fee != null)
                 if ($util.Long)
                     (message.fee = $util.Long.fromValue(object.fee)).unsigned = false;
@@ -2655,7 +2657,7 @@ export const protoc = $root.protoc = (() => {
                 if (!Array.isArray(object.inputs))
                     throw TypeError(".protoc.BtcTx.inputs: array expected");
                 message.inputs = [];
-                for (let i = 0; i < object.inputs.length; ++i) {
+                for (var i = 0; i < object.inputs.length; ++i) {
                     if (typeof object.inputs[i] !== "object")
                         throw TypeError(".protoc.BtcTx.inputs: object expected");
                     message.inputs[i] = $root.protoc.Input.fromObject(object.inputs[i]);
@@ -2665,7 +2667,7 @@ export const protoc = $root.protoc = (() => {
                 if (!Array.isArray(object.outputs))
                     throw TypeError(".protoc.BtcTx.outputs: array expected");
                 message.outputs = [];
-                for (let i = 0; i < object.outputs.length; ++i) {
+                for (var i = 0; i < object.outputs.length; ++i) {
                     if (typeof object.outputs[i] !== "object")
                         throw TypeError(".protoc.BtcTx.outputs: object expected");
                     message.outputs[i] = $root.protoc.Output.fromObject(object.outputs[i]);
@@ -2691,14 +2693,14 @@ export const protoc = $root.protoc = (() => {
         BtcTx.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.arrays || options.defaults) {
                 object.inputs = [];
                 object.outputs = [];
             }
             if (options.defaults) {
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.fee = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.fee = options.longs === String ? "0" : 0;
@@ -2717,12 +2719,12 @@ export const protoc = $root.protoc = (() => {
                 object.memo = message.memo;
             if (message.inputs && message.inputs.length) {
                 object.inputs = [];
-                for (let j = 0; j < message.inputs.length; ++j)
+                for (var j = 0; j < message.inputs.length; ++j)
                     object.inputs[j] = $root.protoc.Input.toObject(message.inputs[j], options);
             }
             if (message.outputs && message.outputs.length) {
                 object.outputs = [];
-                for (let j = 0; j < message.outputs.length; ++j)
+                for (var j = 0; j < message.outputs.length; ++j)
                     object.outputs[j] = $root.protoc.Output.toObject(message.outputs[j], options);
             }
             if (message.omni != null && message.hasOwnProperty("omni"))
@@ -2766,7 +2768,7 @@ export const protoc = $root.protoc = (() => {
          */
         function Omni(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -2865,9 +2867,9 @@ export const protoc = $root.protoc = (() => {
         Omni.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.Omni();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.Omni();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 5:
                     message.to = reader.string();
@@ -2942,7 +2944,7 @@ export const protoc = $root.protoc = (() => {
         Omni.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.Omni)
                 return object;
-            let message = new $root.protoc.Omni();
+            var message = new $root.protoc.Omni();
             if (object.to != null)
                 message.to = String(object.to);
             if (object.changeAddress != null)
@@ -2973,12 +2975,12 @@ export const protoc = $root.protoc = (() => {
         Omni.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.to = "";
                 object.changeAddress = "";
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.omniAmount = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.omniAmount = options.longs === String ? "0" : 0;
@@ -3034,7 +3036,7 @@ export const protoc = $root.protoc = (() => {
          */
         function Input(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -3133,9 +3135,9 @@ export const protoc = $root.protoc = (() => {
         Input.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.Input();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.Input();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.hash = reader.string();
@@ -3191,7 +3193,7 @@ export const protoc = $root.protoc = (() => {
                 if (!$util.isInteger(message.index))
                     return "index: integer expected";
             if (message.utxo != null && message.hasOwnProperty("utxo")) {
-                let error = $root.protoc.utxo.verify(message.utxo);
+                var error = $root.protoc.utxo.verify(message.utxo);
                 if (error)
                     return "utxo." + error;
             }
@@ -3212,7 +3214,7 @@ export const protoc = $root.protoc = (() => {
         Input.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.Input)
                 return object;
-            let message = new $root.protoc.Input();
+            var message = new $root.protoc.Input();
             if (object.hash != null)
                 message.hash = String(object.hash);
             if (object.index != null)
@@ -3239,7 +3241,7 @@ export const protoc = $root.protoc = (() => {
         Input.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.hash = "";
                 object.index = 0;
@@ -3292,7 +3294,7 @@ export const protoc = $root.protoc = (() => {
          */
         function utxo(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -3381,9 +3383,9 @@ export const protoc = $root.protoc = (() => {
         utxo.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.utxo();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.utxo();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.publicKey = reader.string();
@@ -3452,7 +3454,7 @@ export const protoc = $root.protoc = (() => {
         utxo.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.utxo)
                 return object;
-            let message = new $root.protoc.utxo();
+            var message = new $root.protoc.utxo();
             if (object.publicKey != null)
                 message.publicKey = String(object.publicKey);
             if (object.script != null)
@@ -3481,12 +3483,12 @@ export const protoc = $root.protoc = (() => {
         utxo.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.publicKey = "";
                 object.script = "";
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.value = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.value = options.longs === String ? "0" : 0;
@@ -3539,7 +3541,7 @@ export const protoc = $root.protoc = (() => {
          */
         function Output(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -3638,9 +3640,9 @@ export const protoc = $root.protoc = (() => {
         Output.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.Output();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.Output();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.address = reader.string();
@@ -3715,7 +3717,7 @@ export const protoc = $root.protoc = (() => {
         Output.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.Output)
                 return object;
-            let message = new $root.protoc.Output();
+            var message = new $root.protoc.Output();
             if (object.address != null)
                 message.address = String(object.address);
             if (object.value != null)
@@ -3746,11 +3748,11 @@ export const protoc = $root.protoc = (() => {
         Output.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.address = "";
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.value = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.value = options.longs === String ? "0" : 0;
@@ -3810,7 +3812,7 @@ export const protoc = $root.protoc = (() => {
          */
         function EthTx(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -3939,9 +3941,9 @@ export const protoc = $root.protoc = (() => {
         EthTx.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.EthTx();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.EthTx();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.to = reader.string();
@@ -4018,7 +4020,7 @@ export const protoc = $root.protoc = (() => {
                 if (!$util.isInteger(message.nonce))
                     return "nonce: integer expected";
             if (message.override != null && message.hasOwnProperty("override")) {
-                let error = $root.protoc.EthTx.Override.verify(message.override);
+                var error = $root.protoc.EthTx.Override.verify(message.override);
                 if (error)
                     return "override." + error;
             }
@@ -4036,7 +4038,7 @@ export const protoc = $root.protoc = (() => {
         EthTx.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.EthTx)
                 return object;
-            let message = new $root.protoc.EthTx();
+            var message = new $root.protoc.EthTx();
             if (object.to != null)
                 message.to = String(object.to);
             if (object.value != null)
@@ -4069,7 +4071,7 @@ export const protoc = $root.protoc = (() => {
         EthTx.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.to = "";
                 object.value = "";
@@ -4129,7 +4131,7 @@ export const protoc = $root.protoc = (() => {
              */
             function Override(properties) {
                 if (properties)
-                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -4228,9 +4230,9 @@ export const protoc = $root.protoc = (() => {
             Override.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.EthTx.Override();
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.EthTx.Override();
                 while (reader.pos < end) {
-                    let tag = reader.uint32();
+                    var tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.decimals = reader.int32();
@@ -4305,7 +4307,7 @@ export const protoc = $root.protoc = (() => {
             Override.fromObject = function fromObject(object) {
                 if (object instanceof $root.protoc.EthTx.Override)
                     return object;
-                let message = new $root.protoc.EthTx.Override();
+                var message = new $root.protoc.EthTx.Override();
                 if (object.decimals != null)
                     message.decimals = object.decimals | 0;
                 if (object.tokenShortName != null)
@@ -4329,7 +4331,7 @@ export const protoc = $root.protoc = (() => {
             Override.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                let object = {};
+                var object = {};
                 if (options.defaults) {
                     object.decimals = 0;
                     object.tokenShortName = "";
@@ -4388,7 +4390,7 @@ export const protoc = $root.protoc = (() => {
          */
         function EtcTx(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -4507,9 +4509,9 @@ export const protoc = $root.protoc = (() => {
         EtcTx.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.EtcTx();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.EtcTx();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.to = reader.string();
@@ -4596,7 +4598,7 @@ export const protoc = $root.protoc = (() => {
         EtcTx.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.EtcTx)
                 return object;
-            let message = new $root.protoc.EtcTx();
+            var message = new $root.protoc.EtcTx();
             if (object.to != null)
                 message.to = String(object.to);
             if (object.value != null)
@@ -4624,7 +4626,7 @@ export const protoc = $root.protoc = (() => {
         EtcTx.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.to = "";
                 object.value = "";
@@ -4683,7 +4685,7 @@ export const protoc = $root.protoc = (() => {
          */
         function LatestBlock(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -4772,9 +4774,9 @@ export const protoc = $root.protoc = (() => {
         LatestBlock.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.LatestBlock();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.LatestBlock();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.hash = reader.string();
@@ -4843,7 +4845,7 @@ export const protoc = $root.protoc = (() => {
         LatestBlock.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.LatestBlock)
                 return object;
-            let message = new $root.protoc.LatestBlock();
+            var message = new $root.protoc.LatestBlock();
             if (object.hash != null)
                 message.hash = String(object.hash);
             if (object.number != null)
@@ -4872,12 +4874,12 @@ export const protoc = $root.protoc = (() => {
         LatestBlock.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.hash = "";
                 object.number = 0;
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.timestamp = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.timestamp = options.longs === String ? "0" : 0;
@@ -4929,7 +4931,7 @@ export const protoc = $root.protoc = (() => {
          */
         function Override(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -5018,9 +5020,9 @@ export const protoc = $root.protoc = (() => {
         Override.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.Override();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.Override();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.tokenShortName = reader.string();
@@ -5089,7 +5091,7 @@ export const protoc = $root.protoc = (() => {
         Override.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.Override)
                 return object;
-            let message = new $root.protoc.Override();
+            var message = new $root.protoc.Override();
             if (object.tokenShortName != null)
                 message.tokenShortName = String(object.tokenShortName);
             if (object.tokenFullName != null)
@@ -5111,7 +5113,7 @@ export const protoc = $root.protoc = (() => {
         Override.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.tokenShortName = "";
                 object.tokenFullName = "";
@@ -5167,7 +5169,7 @@ export const protoc = $root.protoc = (() => {
          */
         function TronTx(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -5316,9 +5318,9 @@ export const protoc = $root.protoc = (() => {
         TronTx.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.TronTx();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.TronTx();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.token = reader.string();
@@ -5401,12 +5403,12 @@ export const protoc = $root.protoc = (() => {
                 if (!$util.isString(message.value))
                     return "value: string expected";
             if (message.latestBlock != null && message.hasOwnProperty("latestBlock")) {
-                let error = $root.protoc.LatestBlock.verify(message.latestBlock);
+                var error = $root.protoc.LatestBlock.verify(message.latestBlock);
                 if (error)
                     return "latestBlock." + error;
             }
             if (message.override != null && message.hasOwnProperty("override")) {
-                let error = $root.protoc.Override.verify(message.override);
+                var error = $root.protoc.Override.verify(message.override);
                 if (error)
                     return "override." + error;
             }
@@ -5427,7 +5429,7 @@ export const protoc = $root.protoc = (() => {
         TronTx.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.TronTx)
                 return object;
-            let message = new $root.protoc.TronTx();
+            var message = new $root.protoc.TronTx();
             if (object.token != null)
                 message.token = String(object.token);
             if (object.contractAddress != null)
@@ -5467,7 +5469,7 @@ export const protoc = $root.protoc = (() => {
         TronTx.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.token = "";
                 object.contractAddress = "";
@@ -5539,7 +5541,7 @@ export const protoc = $root.protoc = (() => {
             this.inputs = [];
             this.outputs = [];
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -5615,10 +5617,10 @@ export const protoc = $root.protoc = (() => {
             if (message.memo != null && Object.hasOwnProperty.call(message, "memo"))
                 writer.uint32(/* id 3, wireType 2 =*/26).string(message.memo);
             if (message.inputs != null && message.inputs.length)
-                for (let i = 0; i < message.inputs.length; ++i)
+                for (var i = 0; i < message.inputs.length; ++i)
                     $root.protoc.BchTx.Input.encode(message.inputs[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
             if (message.outputs != null && message.outputs.length)
-                for (let i = 0; i < message.outputs.length; ++i)
+                for (var i = 0; i < message.outputs.length; ++i)
                     $root.protoc.Output.encode(message.outputs[i], writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
             return writer;
         };
@@ -5650,9 +5652,9 @@ export const protoc = $root.protoc = (() => {
         BchTx.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.BchTx();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.BchTx();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.fee = reader.int64();
@@ -5720,8 +5722,8 @@ export const protoc = $root.protoc = (() => {
             if (message.inputs != null && message.hasOwnProperty("inputs")) {
                 if (!Array.isArray(message.inputs))
                     return "inputs: array expected";
-                for (let i = 0; i < message.inputs.length; ++i) {
-                    let error = $root.protoc.BchTx.Input.verify(message.inputs[i]);
+                for (var i = 0; i < message.inputs.length; ++i) {
+                    var error = $root.protoc.BchTx.Input.verify(message.inputs[i]);
                     if (error)
                         return "inputs." + error;
                 }
@@ -5729,8 +5731,8 @@ export const protoc = $root.protoc = (() => {
             if (message.outputs != null && message.hasOwnProperty("outputs")) {
                 if (!Array.isArray(message.outputs))
                     return "outputs: array expected";
-                for (let i = 0; i < message.outputs.length; ++i) {
-                    let error = $root.protoc.Output.verify(message.outputs[i]);
+                for (var i = 0; i < message.outputs.length; ++i) {
+                    var error = $root.protoc.Output.verify(message.outputs[i]);
                     if (error)
                         return "outputs." + error;
                 }
@@ -5749,7 +5751,7 @@ export const protoc = $root.protoc = (() => {
         BchTx.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.BchTx)
                 return object;
-            let message = new $root.protoc.BchTx();
+            var message = new $root.protoc.BchTx();
             if (object.fee != null)
                 if ($util.Long)
                     (message.fee = $util.Long.fromValue(object.fee)).unsigned = false;
@@ -5767,7 +5769,7 @@ export const protoc = $root.protoc = (() => {
                 if (!Array.isArray(object.inputs))
                     throw TypeError(".protoc.BchTx.inputs: array expected");
                 message.inputs = [];
-                for (let i = 0; i < object.inputs.length; ++i) {
+                for (var i = 0; i < object.inputs.length; ++i) {
                     if (typeof object.inputs[i] !== "object")
                         throw TypeError(".protoc.BchTx.inputs: object expected");
                     message.inputs[i] = $root.protoc.BchTx.Input.fromObject(object.inputs[i]);
@@ -5777,7 +5779,7 @@ export const protoc = $root.protoc = (() => {
                 if (!Array.isArray(object.outputs))
                     throw TypeError(".protoc.BchTx.outputs: array expected");
                 message.outputs = [];
-                for (let i = 0; i < object.outputs.length; ++i) {
+                for (var i = 0; i < object.outputs.length; ++i) {
                     if (typeof object.outputs[i] !== "object")
                         throw TypeError(".protoc.BchTx.outputs: object expected");
                     message.outputs[i] = $root.protoc.Output.fromObject(object.outputs[i]);
@@ -5798,14 +5800,14 @@ export const protoc = $root.protoc = (() => {
         BchTx.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.arrays || options.defaults) {
                 object.inputs = [];
                 object.outputs = [];
             }
             if (options.defaults) {
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.fee = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.fee = options.longs === String ? "0" : 0;
@@ -5823,12 +5825,12 @@ export const protoc = $root.protoc = (() => {
                 object.memo = message.memo;
             if (message.inputs && message.inputs.length) {
                 object.inputs = [];
-                for (let j = 0; j < message.inputs.length; ++j)
+                for (var j = 0; j < message.inputs.length; ++j)
                     object.inputs[j] = $root.protoc.BchTx.Input.toObject(message.inputs[j], options);
             }
             if (message.outputs && message.outputs.length) {
                 object.outputs = [];
-                for (let j = 0; j < message.outputs.length; ++j)
+                for (var j = 0; j < message.outputs.length; ++j)
                     object.outputs[j] = $root.protoc.Output.toObject(message.outputs[j], options);
             }
             return object;
@@ -5868,7 +5870,7 @@ export const protoc = $root.protoc = (() => {
              */
             function Input(properties) {
                 if (properties)
-                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -5977,9 +5979,9 @@ export const protoc = $root.protoc = (() => {
             Input.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.BchTx.Input();
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.BchTx.Input();
                 while (reader.pos < end) {
-                    let tag = reader.uint32();
+                    var tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.hash = reader.string();
@@ -6060,7 +6062,7 @@ export const protoc = $root.protoc = (() => {
             Input.fromObject = function fromObject(object) {
                 if (object instanceof $root.protoc.BchTx.Input)
                     return object;
-                let message = new $root.protoc.BchTx.Input();
+                var message = new $root.protoc.BchTx.Input();
                 if (object.hash != null)
                     message.hash = String(object.hash);
                 if (object.index != null)
@@ -6093,12 +6095,12 @@ export const protoc = $root.protoc = (() => {
             Input.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                let object = {};
+                var object = {};
                 if (options.defaults) {
                     object.hash = "";
                     object.index = 0;
                     if ($util.Long) {
-                        let long = new $util.Long(0, 0, false);
+                        var long = new $util.Long(0, 0, false);
                         object.value = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                     } else
                         object.value = options.longs === String ? "0" : 0;
@@ -6163,7 +6165,7 @@ export const protoc = $root.protoc = (() => {
             this.inputs = [];
             this.outputs = [];
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -6239,10 +6241,10 @@ export const protoc = $root.protoc = (() => {
             if (message.memo != null && Object.hasOwnProperty.call(message, "memo"))
                 writer.uint32(/* id 3, wireType 2 =*/26).string(message.memo);
             if (message.inputs != null && message.inputs.length)
-                for (let i = 0; i < message.inputs.length; ++i)
+                for (var i = 0; i < message.inputs.length; ++i)
                     $root.protoc.DashTx.Input.encode(message.inputs[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
             if (message.outputs != null && message.outputs.length)
-                for (let i = 0; i < message.outputs.length; ++i)
+                for (var i = 0; i < message.outputs.length; ++i)
                     $root.protoc.Output.encode(message.outputs[i], writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
             return writer;
         };
@@ -6274,9 +6276,9 @@ export const protoc = $root.protoc = (() => {
         DashTx.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.DashTx();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.DashTx();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.fee = reader.int64();
@@ -6344,8 +6346,8 @@ export const protoc = $root.protoc = (() => {
             if (message.inputs != null && message.hasOwnProperty("inputs")) {
                 if (!Array.isArray(message.inputs))
                     return "inputs: array expected";
-                for (let i = 0; i < message.inputs.length; ++i) {
-                    let error = $root.protoc.DashTx.Input.verify(message.inputs[i]);
+                for (var i = 0; i < message.inputs.length; ++i) {
+                    var error = $root.protoc.DashTx.Input.verify(message.inputs[i]);
                     if (error)
                         return "inputs." + error;
                 }
@@ -6353,8 +6355,8 @@ export const protoc = $root.protoc = (() => {
             if (message.outputs != null && message.hasOwnProperty("outputs")) {
                 if (!Array.isArray(message.outputs))
                     return "outputs: array expected";
-                for (let i = 0; i < message.outputs.length; ++i) {
-                    let error = $root.protoc.Output.verify(message.outputs[i]);
+                for (var i = 0; i < message.outputs.length; ++i) {
+                    var error = $root.protoc.Output.verify(message.outputs[i]);
                     if (error)
                         return "outputs." + error;
                 }
@@ -6373,7 +6375,7 @@ export const protoc = $root.protoc = (() => {
         DashTx.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.DashTx)
                 return object;
-            let message = new $root.protoc.DashTx();
+            var message = new $root.protoc.DashTx();
             if (object.fee != null)
                 if ($util.Long)
                     (message.fee = $util.Long.fromValue(object.fee)).unsigned = false;
@@ -6391,7 +6393,7 @@ export const protoc = $root.protoc = (() => {
                 if (!Array.isArray(object.inputs))
                     throw TypeError(".protoc.DashTx.inputs: array expected");
                 message.inputs = [];
-                for (let i = 0; i < object.inputs.length; ++i) {
+                for (var i = 0; i < object.inputs.length; ++i) {
                     if (typeof object.inputs[i] !== "object")
                         throw TypeError(".protoc.DashTx.inputs: object expected");
                     message.inputs[i] = $root.protoc.DashTx.Input.fromObject(object.inputs[i]);
@@ -6401,7 +6403,7 @@ export const protoc = $root.protoc = (() => {
                 if (!Array.isArray(object.outputs))
                     throw TypeError(".protoc.DashTx.outputs: array expected");
                 message.outputs = [];
-                for (let i = 0; i < object.outputs.length; ++i) {
+                for (var i = 0; i < object.outputs.length; ++i) {
                     if (typeof object.outputs[i] !== "object")
                         throw TypeError(".protoc.DashTx.outputs: object expected");
                     message.outputs[i] = $root.protoc.Output.fromObject(object.outputs[i]);
@@ -6422,14 +6424,14 @@ export const protoc = $root.protoc = (() => {
         DashTx.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.arrays || options.defaults) {
                 object.inputs = [];
                 object.outputs = [];
             }
             if (options.defaults) {
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.fee = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.fee = options.longs === String ? "0" : 0;
@@ -6447,12 +6449,12 @@ export const protoc = $root.protoc = (() => {
                 object.memo = message.memo;
             if (message.inputs && message.inputs.length) {
                 object.inputs = [];
-                for (let j = 0; j < message.inputs.length; ++j)
+                for (var j = 0; j < message.inputs.length; ++j)
                     object.inputs[j] = $root.protoc.DashTx.Input.toObject(message.inputs[j], options);
             }
             if (message.outputs && message.outputs.length) {
                 object.outputs = [];
-                for (let j = 0; j < message.outputs.length; ++j)
+                for (var j = 0; j < message.outputs.length; ++j)
                     object.outputs[j] = $root.protoc.Output.toObject(message.outputs[j], options);
             }
             return object;
@@ -6492,7 +6494,7 @@ export const protoc = $root.protoc = (() => {
              */
             function Input(properties) {
                 if (properties)
-                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -6601,9 +6603,9 @@ export const protoc = $root.protoc = (() => {
             Input.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.DashTx.Input();
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.DashTx.Input();
                 while (reader.pos < end) {
-                    let tag = reader.uint32();
+                    var tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.hash = reader.string();
@@ -6684,7 +6686,7 @@ export const protoc = $root.protoc = (() => {
             Input.fromObject = function fromObject(object) {
                 if (object instanceof $root.protoc.DashTx.Input)
                     return object;
-                let message = new $root.protoc.DashTx.Input();
+                var message = new $root.protoc.DashTx.Input();
                 if (object.hash != null)
                     message.hash = String(object.hash);
                 if (object.index != null)
@@ -6717,12 +6719,12 @@ export const protoc = $root.protoc = (() => {
             Input.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                let object = {};
+                var object = {};
                 if (options.defaults) {
                     object.hash = "";
                     object.index = 0;
                     if ($util.Long) {
-                        let long = new $util.Long(0, 0, false);
+                        var long = new $util.Long(0, 0, false);
                         object.value = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                     } else
                         object.value = options.longs === String ? "0" : 0;
@@ -6787,7 +6789,7 @@ export const protoc = $root.protoc = (() => {
             this.inputs = [];
             this.outputs = [];
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -6863,10 +6865,10 @@ export const protoc = $root.protoc = (() => {
             if (message.memo != null && Object.hasOwnProperty.call(message, "memo"))
                 writer.uint32(/* id 3, wireType 2 =*/26).string(message.memo);
             if (message.inputs != null && message.inputs.length)
-                for (let i = 0; i < message.inputs.length; ++i)
+                for (var i = 0; i < message.inputs.length; ++i)
                     $root.protoc.Input.encode(message.inputs[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
             if (message.outputs != null && message.outputs.length)
-                for (let i = 0; i < message.outputs.length; ++i)
+                for (var i = 0; i < message.outputs.length; ++i)
                     $root.protoc.Output.encode(message.outputs[i], writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
             return writer;
         };
@@ -6898,9 +6900,9 @@ export const protoc = $root.protoc = (() => {
         LtcTx.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.LtcTx();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.LtcTx();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.fee = reader.int64();
@@ -6968,8 +6970,8 @@ export const protoc = $root.protoc = (() => {
             if (message.inputs != null && message.hasOwnProperty("inputs")) {
                 if (!Array.isArray(message.inputs))
                     return "inputs: array expected";
-                for (let i = 0; i < message.inputs.length; ++i) {
-                    let error = $root.protoc.Input.verify(message.inputs[i]);
+                for (var i = 0; i < message.inputs.length; ++i) {
+                    var error = $root.protoc.Input.verify(message.inputs[i]);
                     if (error)
                         return "inputs." + error;
                 }
@@ -6977,8 +6979,8 @@ export const protoc = $root.protoc = (() => {
             if (message.outputs != null && message.hasOwnProperty("outputs")) {
                 if (!Array.isArray(message.outputs))
                     return "outputs: array expected";
-                for (let i = 0; i < message.outputs.length; ++i) {
-                    let error = $root.protoc.Output.verify(message.outputs[i]);
+                for (var i = 0; i < message.outputs.length; ++i) {
+                    var error = $root.protoc.Output.verify(message.outputs[i]);
                     if (error)
                         return "outputs." + error;
                 }
@@ -6997,7 +6999,7 @@ export const protoc = $root.protoc = (() => {
         LtcTx.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.LtcTx)
                 return object;
-            let message = new $root.protoc.LtcTx();
+            var message = new $root.protoc.LtcTx();
             if (object.fee != null)
                 if ($util.Long)
                     (message.fee = $util.Long.fromValue(object.fee)).unsigned = false;
@@ -7015,7 +7017,7 @@ export const protoc = $root.protoc = (() => {
                 if (!Array.isArray(object.inputs))
                     throw TypeError(".protoc.LtcTx.inputs: array expected");
                 message.inputs = [];
-                for (let i = 0; i < object.inputs.length; ++i) {
+                for (var i = 0; i < object.inputs.length; ++i) {
                     if (typeof object.inputs[i] !== "object")
                         throw TypeError(".protoc.LtcTx.inputs: object expected");
                     message.inputs[i] = $root.protoc.Input.fromObject(object.inputs[i]);
@@ -7025,7 +7027,7 @@ export const protoc = $root.protoc = (() => {
                 if (!Array.isArray(object.outputs))
                     throw TypeError(".protoc.LtcTx.outputs: array expected");
                 message.outputs = [];
-                for (let i = 0; i < object.outputs.length; ++i) {
+                for (var i = 0; i < object.outputs.length; ++i) {
                     if (typeof object.outputs[i] !== "object")
                         throw TypeError(".protoc.LtcTx.outputs: object expected");
                     message.outputs[i] = $root.protoc.Output.fromObject(object.outputs[i]);
@@ -7046,14 +7048,14 @@ export const protoc = $root.protoc = (() => {
         LtcTx.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.arrays || options.defaults) {
                 object.inputs = [];
                 object.outputs = [];
             }
             if (options.defaults) {
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.fee = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.fee = options.longs === String ? "0" : 0;
@@ -7071,12 +7073,12 @@ export const protoc = $root.protoc = (() => {
                 object.memo = message.memo;
             if (message.inputs && message.inputs.length) {
                 object.inputs = [];
-                for (let j = 0; j < message.inputs.length; ++j)
+                for (var j = 0; j < message.inputs.length; ++j)
                     object.inputs[j] = $root.protoc.Input.toObject(message.inputs[j], options);
             }
             if (message.outputs && message.outputs.length) {
                 object.outputs = [];
-                for (let j = 0; j < message.outputs.length; ++j)
+                for (var j = 0; j < message.outputs.length; ++j)
                     object.outputs[j] = $root.protoc.Output.toObject(message.outputs[j], options);
             }
             return object;
@@ -7121,7 +7123,7 @@ export const protoc = $root.protoc = (() => {
         function DcrTx(properties) {
             this.inputs = [];
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -7207,7 +7209,7 @@ export const protoc = $root.protoc = (() => {
             if (message.amount != null && Object.hasOwnProperty.call(message, "amount"))
                 writer.uint32(/* id 4, wireType 0 =*/32).int64(message.amount);
             if (message.inputs != null && message.inputs.length)
-                for (let i = 0; i < message.inputs.length; ++i)
+                for (var i = 0; i < message.inputs.length; ++i)
                     $root.protoc.DcrTx.Input.encode(message.inputs[i], writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
             if (message.changeAddress != null && Object.hasOwnProperty.call(message, "changeAddress"))
                 writer.uint32(/* id 6, wireType 2 =*/50).string(message.changeAddress);
@@ -7241,9 +7243,9 @@ export const protoc = $root.protoc = (() => {
         DcrTx.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.DcrTx();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.DcrTx();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.fee = reader.int64();
@@ -7315,8 +7317,8 @@ export const protoc = $root.protoc = (() => {
             if (message.inputs != null && message.hasOwnProperty("inputs")) {
                 if (!Array.isArray(message.inputs))
                     return "inputs: array expected";
-                for (let i = 0; i < message.inputs.length; ++i) {
-                    let error = $root.protoc.DcrTx.Input.verify(message.inputs[i]);
+                for (var i = 0; i < message.inputs.length; ++i) {
+                    var error = $root.protoc.DcrTx.Input.verify(message.inputs[i]);
                     if (error)
                         return "inputs." + error;
                 }
@@ -7338,7 +7340,7 @@ export const protoc = $root.protoc = (() => {
         DcrTx.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.DcrTx)
                 return object;
-            let message = new $root.protoc.DcrTx();
+            var message = new $root.protoc.DcrTx();
             if (object.fee != null)
                 if ($util.Long)
                     (message.fee = $util.Long.fromValue(object.fee)).unsigned = false;
@@ -7365,7 +7367,7 @@ export const protoc = $root.protoc = (() => {
                 if (!Array.isArray(object.inputs))
                     throw TypeError(".protoc.DcrTx.inputs: array expected");
                 message.inputs = [];
-                for (let i = 0; i < object.inputs.length; ++i) {
+                for (var i = 0; i < object.inputs.length; ++i) {
                     if (typeof object.inputs[i] !== "object")
                         throw TypeError(".protoc.DcrTx.inputs: object expected");
                     message.inputs[i] = $root.protoc.DcrTx.Input.fromObject(object.inputs[i]);
@@ -7388,19 +7390,19 @@ export const protoc = $root.protoc = (() => {
         DcrTx.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.arrays || options.defaults)
                 object.inputs = [];
             if (options.defaults) {
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.fee = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.fee = options.longs === String ? "0" : 0;
                 object.to = "";
                 object.memo = "";
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.amount = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.amount = options.longs === String ? "0" : 0;
@@ -7422,7 +7424,7 @@ export const protoc = $root.protoc = (() => {
                     object.amount = options.longs === String ? $util.Long.prototype.toString.call(message.amount) : options.longs === Number ? new $util.LongBits(message.amount.low >>> 0, message.amount.high >>> 0).toNumber() : message.amount;
             if (message.inputs && message.inputs.length) {
                 object.inputs = [];
-                for (let j = 0; j < message.inputs.length; ++j)
+                for (var j = 0; j < message.inputs.length; ++j)
                     object.inputs[j] = $root.protoc.DcrTx.Input.toObject(message.inputs[j], options);
             }
             if (message.changeAddress != null && message.hasOwnProperty("changeAddress"))
@@ -7463,7 +7465,7 @@ export const protoc = $root.protoc = (() => {
              */
             function Input(properties) {
                 if (properties)
-                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -7562,9 +7564,9 @@ export const protoc = $root.protoc = (() => {
             Input.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.DcrTx.Input();
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.DcrTx.Input();
                 while (reader.pos < end) {
-                    let tag = reader.uint32();
+                    var tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.address = reader.string();
@@ -7639,7 +7641,7 @@ export const protoc = $root.protoc = (() => {
             Input.fromObject = function fromObject(object) {
                 if (object instanceof $root.protoc.DcrTx.Input)
                     return object;
-                let message = new $root.protoc.DcrTx.Input();
+                var message = new $root.protoc.DcrTx.Input();
                 if (object.address != null)
                     message.address = String(object.address);
                 if (object.txId != null)
@@ -7670,13 +7672,13 @@ export const protoc = $root.protoc = (() => {
             Input.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                let object = {};
+                var object = {};
                 if (options.defaults) {
                     object.address = "";
                     object.txId = "";
                     object.outputIndex = 0;
                     if ($util.Long) {
-                        let long = new $util.Long(0, 0, false);
+                        var long = new $util.Long(0, 0, false);
                         object.atoms = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                     } else
                         object.atoms = options.longs === String ? "0" : 0;
@@ -7737,7 +7739,7 @@ export const protoc = $root.protoc = (() => {
         function XzcTx(properties) {
             this.inputs = [];
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -7823,7 +7825,7 @@ export const protoc = $root.protoc = (() => {
             if (message.amount != null && Object.hasOwnProperty.call(message, "amount"))
                 writer.uint32(/* id 4, wireType 0 =*/32).int64(message.amount);
             if (message.inputs != null && message.inputs.length)
-                for (let i = 0; i < message.inputs.length; ++i)
+                for (var i = 0; i < message.inputs.length; ++i)
                     $root.protoc.XzcTx.Input.encode(message.inputs[i], writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
             if (message.changeAddress != null && Object.hasOwnProperty.call(message, "changeAddress"))
                 writer.uint32(/* id 6, wireType 2 =*/50).string(message.changeAddress);
@@ -7857,9 +7859,9 @@ export const protoc = $root.protoc = (() => {
         XzcTx.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.XzcTx();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.XzcTx();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.fee = reader.int64();
@@ -7931,8 +7933,8 @@ export const protoc = $root.protoc = (() => {
             if (message.inputs != null && message.hasOwnProperty("inputs")) {
                 if (!Array.isArray(message.inputs))
                     return "inputs: array expected";
-                for (let i = 0; i < message.inputs.length; ++i) {
-                    let error = $root.protoc.XzcTx.Input.verify(message.inputs[i]);
+                for (var i = 0; i < message.inputs.length; ++i) {
+                    var error = $root.protoc.XzcTx.Input.verify(message.inputs[i]);
                     if (error)
                         return "inputs." + error;
                 }
@@ -7954,7 +7956,7 @@ export const protoc = $root.protoc = (() => {
         XzcTx.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.XzcTx)
                 return object;
-            let message = new $root.protoc.XzcTx();
+            var message = new $root.protoc.XzcTx();
             if (object.fee != null)
                 if ($util.Long)
                     (message.fee = $util.Long.fromValue(object.fee)).unsigned = false;
@@ -7981,7 +7983,7 @@ export const protoc = $root.protoc = (() => {
                 if (!Array.isArray(object.inputs))
                     throw TypeError(".protoc.XzcTx.inputs: array expected");
                 message.inputs = [];
-                for (let i = 0; i < object.inputs.length; ++i) {
+                for (var i = 0; i < object.inputs.length; ++i) {
                     if (typeof object.inputs[i] !== "object")
                         throw TypeError(".protoc.XzcTx.inputs: object expected");
                     message.inputs[i] = $root.protoc.XzcTx.Input.fromObject(object.inputs[i]);
@@ -8004,19 +8006,19 @@ export const protoc = $root.protoc = (() => {
         XzcTx.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.arrays || options.defaults)
                 object.inputs = [];
             if (options.defaults) {
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.fee = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.fee = options.longs === String ? "0" : 0;
                 object.to = "";
                 object.memo = "";
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.amount = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.amount = options.longs === String ? "0" : 0;
@@ -8038,7 +8040,7 @@ export const protoc = $root.protoc = (() => {
                     object.amount = options.longs === String ? $util.Long.prototype.toString.call(message.amount) : options.longs === Number ? new $util.LongBits(message.amount.low >>> 0, message.amount.high >>> 0).toNumber() : message.amount;
             if (message.inputs && message.inputs.length) {
                 object.inputs = [];
-                for (let j = 0; j < message.inputs.length; ++j)
+                for (var j = 0; j < message.inputs.length; ++j)
                     object.inputs[j] = $root.protoc.XzcTx.Input.toObject(message.inputs[j], options);
             }
             if (message.changeAddress != null && message.hasOwnProperty("changeAddress"))
@@ -8079,7 +8081,7 @@ export const protoc = $root.protoc = (() => {
              */
             function Input(properties) {
                 if (properties)
-                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -8178,9 +8180,9 @@ export const protoc = $root.protoc = (() => {
             Input.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.XzcTx.Input();
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.XzcTx.Input();
                 while (reader.pos < end) {
-                    let tag = reader.uint32();
+                    var tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.address = reader.string();
@@ -8255,7 +8257,7 @@ export const protoc = $root.protoc = (() => {
             Input.fromObject = function fromObject(object) {
                 if (object instanceof $root.protoc.XzcTx.Input)
                     return object;
-                let message = new $root.protoc.XzcTx.Input();
+                var message = new $root.protoc.XzcTx.Input();
                 if (object.address != null)
                     message.address = String(object.address);
                 if (object.txId != null)
@@ -8286,13 +8288,13 @@ export const protoc = $root.protoc = (() => {
             Input.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                let object = {};
+                var object = {};
                 if (options.defaults) {
                     object.address = "";
                     object.txId = "";
                     object.outputIndex = 0;
                     if ($util.Long) {
-                        let long = new $util.Long(0, 0, false);
+                        var long = new $util.Long(0, 0, false);
                         object.satoshis = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                     } else
                         object.satoshis = options.longs === String ? "0" : 0;
@@ -8353,7 +8355,7 @@ export const protoc = $root.protoc = (() => {
          */
         function XrpTx(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -8482,9 +8484,9 @@ export const protoc = $root.protoc = (() => {
         XrpTx.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.XrpTx();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.XrpTx();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.to = reader.string();
@@ -8577,7 +8579,7 @@ export const protoc = $root.protoc = (() => {
         XrpTx.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.XrpTx)
                 return object;
-            let message = new $root.protoc.XrpTx();
+            var message = new $root.protoc.XrpTx();
             if (object.to != null)
                 message.to = String(object.to);
             if (object.amount != null)
@@ -8635,27 +8637,27 @@ export const protoc = $root.protoc = (() => {
         XrpTx.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.to = "";
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.amount = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.amount = options.longs === String ? "0" : 0;
                 object.changeAddress = "";
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.fee = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.fee = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.sequence = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.sequence = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.tag = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.tag = options.longs === String ? "0" : 0;
@@ -8730,7 +8732,7 @@ export const protoc = $root.protoc = (() => {
          */
         function IostTx(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -8869,9 +8871,9 @@ export const protoc = $root.protoc = (() => {
         IostTx.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.IostTx();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.IostTx();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.tokenName = reader.string();
@@ -8954,7 +8956,7 @@ export const protoc = $root.protoc = (() => {
                 if (!$util.isInteger(message.expiration))
                     return "expiration: integer expected";
             if (message.config != null && message.hasOwnProperty("config")) {
-                let error = $root.protoc.IostTx.Config.verify(message.config);
+                var error = $root.protoc.IostTx.Config.verify(message.config);
                 if (error)
                     return "config." + error;
             }
@@ -8972,7 +8974,7 @@ export const protoc = $root.protoc = (() => {
         IostTx.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.IostTx)
                 return object;
-            let message = new $root.protoc.IostTx();
+            var message = new $root.protoc.IostTx();
             if (object.tokenName != null)
                 message.tokenName = String(object.tokenName);
             if (object.from != null)
@@ -9014,7 +9016,7 @@ export const protoc = $root.protoc = (() => {
         IostTx.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.tokenName = "";
                 object.from = "";
@@ -9022,7 +9024,7 @@ export const protoc = $root.protoc = (() => {
                 object.memo = "";
                 object.amount = "";
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.timestamp = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.timestamp = options.longs === String ? "0" : 0;
@@ -9084,7 +9086,7 @@ export const protoc = $root.protoc = (() => {
              */
             function Config(properties) {
                 if (properties)
-                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -9183,9 +9185,9 @@ export const protoc = $root.protoc = (() => {
             Config.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.IostTx.Config();
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.IostTx.Config();
                 while (reader.pos < end) {
-                    let tag = reader.uint32();
+                    var tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.gasRatio = reader.int64();
@@ -9260,7 +9262,7 @@ export const protoc = $root.protoc = (() => {
             Config.fromObject = function fromObject(object) {
                 if (object instanceof $root.protoc.IostTx.Config)
                     return object;
-                let message = new $root.protoc.IostTx.Config();
+                var message = new $root.protoc.IostTx.Config();
                 if (object.gasRatio != null)
                     if ($util.Long)
                         (message.gasRatio = $util.Long.fromValue(object.gasRatio)).unsigned = false;
@@ -9298,15 +9300,15 @@ export const protoc = $root.protoc = (() => {
             Config.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                let object = {};
+                var object = {};
                 if (options.defaults) {
                     if ($util.Long) {
-                        let long = new $util.Long(0, 0, false);
+                        var long = new $util.Long(0, 0, false);
                         object.gasRatio = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                     } else
                         object.gasRatio = options.longs === String ? "0" : 0;
                     if ($util.Long) {
-                        let long = new $util.Long(0, 0, false);
+                        var long = new $util.Long(0, 0, false);
                         object.gasLimit = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                     } else
                         object.gasLimit = options.longs === String ? "0" : 0;
@@ -9374,7 +9376,7 @@ export const protoc = $root.protoc = (() => {
         function OmniTx(properties) {
             this.inputs = [];
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -9474,7 +9476,7 @@ export const protoc = $root.protoc = (() => {
             if (message.memo != null && Object.hasOwnProperty.call(message, "memo"))
                 writer.uint32(/* id 3, wireType 2 =*/26).string(message.memo);
             if (message.inputs != null && message.inputs.length)
-                for (let i = 0; i < message.inputs.length; ++i)
+                for (var i = 0; i < message.inputs.length; ++i)
                     $root.protoc.OmniTx.Input.encode(message.inputs[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
             if (message.to != null && Object.hasOwnProperty.call(message, "to"))
                 writer.uint32(/* id 5, wireType 2 =*/42).string(message.to);
@@ -9514,9 +9516,9 @@ export const protoc = $root.protoc = (() => {
         OmniTx.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.OmniTx();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.OmniTx();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.fee = reader.int64();
@@ -9591,8 +9593,8 @@ export const protoc = $root.protoc = (() => {
             if (message.inputs != null && message.hasOwnProperty("inputs")) {
                 if (!Array.isArray(message.inputs))
                     return "inputs: array expected";
-                for (let i = 0; i < message.inputs.length; ++i) {
-                    let error = $root.protoc.OmniTx.Input.verify(message.inputs[i]);
+                for (var i = 0; i < message.inputs.length; ++i) {
+                    var error = $root.protoc.OmniTx.Input.verify(message.inputs[i]);
                     if (error)
                         return "inputs." + error;
                 }
@@ -9623,7 +9625,7 @@ export const protoc = $root.protoc = (() => {
         OmniTx.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.OmniTx)
                 return object;
-            let message = new $root.protoc.OmniTx();
+            var message = new $root.protoc.OmniTx();
             if (object.fee != null)
                 if ($util.Long)
                     (message.fee = $util.Long.fromValue(object.fee)).unsigned = false;
@@ -9641,7 +9643,7 @@ export const protoc = $root.protoc = (() => {
                 if (!Array.isArray(object.inputs))
                     throw TypeError(".protoc.OmniTx.inputs: array expected");
                 message.inputs = [];
-                for (let i = 0; i < object.inputs.length; ++i) {
+                for (var i = 0; i < object.inputs.length; ++i) {
                     if (typeof object.inputs[i] !== "object")
                         throw TypeError(".protoc.OmniTx.inputs: object expected");
                     message.inputs[i] = $root.protoc.OmniTx.Input.fromObject(object.inputs[i]);
@@ -9677,12 +9679,12 @@ export const protoc = $root.protoc = (() => {
         OmniTx.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.arrays || options.defaults)
                 object.inputs = [];
             if (options.defaults) {
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.fee = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.fee = options.longs === String ? "0" : 0;
@@ -9691,7 +9693,7 @@ export const protoc = $root.protoc = (() => {
                 object.to = "";
                 object.changeAddress = "";
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.omniAmount = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.omniAmount = options.longs === String ? "0" : 0;
@@ -9708,7 +9710,7 @@ export const protoc = $root.protoc = (() => {
                 object.memo = message.memo;
             if (message.inputs && message.inputs.length) {
                 object.inputs = [];
-                for (let j = 0; j < message.inputs.length; ++j)
+                for (var j = 0; j < message.inputs.length; ++j)
                     object.inputs[j] = $root.protoc.OmniTx.Input.toObject(message.inputs[j], options);
             }
             if (message.to != null && message.hasOwnProperty("to"))
@@ -9758,7 +9760,7 @@ export const protoc = $root.protoc = (() => {
              */
             function Input(properties) {
                 if (properties)
-                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -9857,9 +9859,9 @@ export const protoc = $root.protoc = (() => {
             Input.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.OmniTx.Input();
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.OmniTx.Input();
                 while (reader.pos < end) {
-                    let tag = reader.uint32();
+                    var tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.hash = reader.string();
@@ -9915,7 +9917,7 @@ export const protoc = $root.protoc = (() => {
                     if (!$util.isInteger(message.index))
                         return "index: integer expected";
                 if (message.utxo != null && message.hasOwnProperty("utxo")) {
-                    let error = $root.protoc.OmniTx.utxo.verify(message.utxo);
+                    var error = $root.protoc.OmniTx.utxo.verify(message.utxo);
                     if (error)
                         return "utxo." + error;
                 }
@@ -9936,7 +9938,7 @@ export const protoc = $root.protoc = (() => {
             Input.fromObject = function fromObject(object) {
                 if (object instanceof $root.protoc.OmniTx.Input)
                     return object;
-                let message = new $root.protoc.OmniTx.Input();
+                var message = new $root.protoc.OmniTx.Input();
                 if (object.hash != null)
                     message.hash = String(object.hash);
                 if (object.index != null)
@@ -9963,7 +9965,7 @@ export const protoc = $root.protoc = (() => {
             Input.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                let object = {};
+                var object = {};
                 if (options.defaults) {
                     object.hash = "";
                     object.index = 0;
@@ -10016,7 +10018,7 @@ export const protoc = $root.protoc = (() => {
              */
             function utxo(properties) {
                 if (properties)
-                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -10105,9 +10107,9 @@ export const protoc = $root.protoc = (() => {
             utxo.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.OmniTx.utxo();
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.OmniTx.utxo();
                 while (reader.pos < end) {
-                    let tag = reader.uint32();
+                    var tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.publicKey = reader.string();
@@ -10176,7 +10178,7 @@ export const protoc = $root.protoc = (() => {
             utxo.fromObject = function fromObject(object) {
                 if (object instanceof $root.protoc.OmniTx.utxo)
                     return object;
-                let message = new $root.protoc.OmniTx.utxo();
+                var message = new $root.protoc.OmniTx.utxo();
                 if (object.publicKey != null)
                     message.publicKey = String(object.publicKey);
                 if (object.script != null)
@@ -10205,12 +10207,12 @@ export const protoc = $root.protoc = (() => {
             utxo.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                let object = {};
+                var object = {};
                 if (options.defaults) {
                     object.publicKey = "";
                     object.script = "";
                     if ($util.Long) {
-                        let long = new $util.Long(0, 0, false);
+                        var long = new $util.Long(0, 0, false);
                         object.value = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                     } else
                         object.value = options.longs === String ? "0" : 0;
@@ -10266,7 +10268,7 @@ export const protoc = $root.protoc = (() => {
          */
         function EosTx(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -10365,9 +10367,9 @@ export const protoc = $root.protoc = (() => {
         EosTx.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.EosTx();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.EosTx();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.type = reader.string();
@@ -10423,12 +10425,12 @@ export const protoc = $root.protoc = (() => {
                 if (!$util.isString(message.tokenAccount))
                     return "tokenAccount: string expected";
             if (message.data != null && message.hasOwnProperty("data")) {
-                let error = $root.protoc.EosTx.Data.verify(message.data);
+                var error = $root.protoc.EosTx.Data.verify(message.data);
                 if (error)
                     return "data." + error;
             }
             if (message.header != null && message.hasOwnProperty("header")) {
-                let error = $root.protoc.EosTx.Header.verify(message.header);
+                var error = $root.protoc.EosTx.Header.verify(message.header);
                 if (error)
                     return "header." + error;
             }
@@ -10446,7 +10448,7 @@ export const protoc = $root.protoc = (() => {
         EosTx.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.EosTx)
                 return object;
-            let message = new $root.protoc.EosTx();
+            var message = new $root.protoc.EosTx();
             if (object.type != null)
                 message.type = String(object.type);
             if (object.tokenAccount != null)
@@ -10476,7 +10478,7 @@ export const protoc = $root.protoc = (() => {
         EosTx.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.type = "";
                 object.tokenAccount = "";
@@ -10530,7 +10532,7 @@ export const protoc = $root.protoc = (() => {
              */
             function Data(properties) {
                 if (properties)
-                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -10659,9 +10661,9 @@ export const protoc = $root.protoc = (() => {
             Data.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.EosTx.Data();
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.EosTx.Data();
                 while (reader.pos < end) {
-                    let tag = reader.uint32();
+                    var tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.from = reader.string();
@@ -10754,7 +10756,7 @@ export const protoc = $root.protoc = (() => {
             Data.fromObject = function fromObject(object) {
                 if (object instanceof $root.protoc.EosTx.Data)
                     return object;
-                let message = new $root.protoc.EosTx.Data();
+                var message = new $root.protoc.EosTx.Data();
                 if (object.from != null)
                     message.from = String(object.from);
                 if (object.to != null)
@@ -10798,19 +10800,19 @@ export const protoc = $root.protoc = (() => {
             Data.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                let object = {};
+                var object = {};
                 if (options.defaults) {
                     object.from = "";
                     object.to = "";
                     if ($util.Long) {
-                        let long = new $util.Long(0, 0, false);
+                        var long = new $util.Long(0, 0, false);
                         object.amount = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                     } else
                         object.amount = options.longs === String ? "0" : 0;
                     object.symbol = "";
                     object.memo = "";
                     if ($util.Long) {
-                        let long = new $util.Long(0, 0, false);
+                        var long = new $util.Long(0, 0, false);
                         object.fee = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                     } else
                         object.fee = options.longs === String ? "0" : 0;
@@ -10875,7 +10877,7 @@ export const protoc = $root.protoc = (() => {
              */
             function Header(properties) {
                 if (properties)
-                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -10974,9 +10976,9 @@ export const protoc = $root.protoc = (() => {
             Header.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.EosTx.Header();
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.EosTx.Header();
                 while (reader.pos < end) {
-                    let tag = reader.uint32();
+                    var tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.time = reader.int64();
@@ -11051,7 +11053,7 @@ export const protoc = $root.protoc = (() => {
             Header.fromObject = function fromObject(object) {
                 if (object instanceof $root.protoc.EosTx.Header)
                     return object;
-                let message = new $root.protoc.EosTx.Header();
+                var message = new $root.protoc.EosTx.Header();
                 if (object.time != null)
                     if ($util.Long)
                         (message.time = $util.Long.fromValue(object.time)).unsigned = false;
@@ -11096,21 +11098,21 @@ export const protoc = $root.protoc = (() => {
             Header.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                let object = {};
+                var object = {};
                 if (options.defaults) {
                     if ($util.Long) {
-                        let long = new $util.Long(0, 0, false);
+                        var long = new $util.Long(0, 0, false);
                         object.time = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                     } else
                         object.time = options.longs === String ? "0" : 0;
                     object.expireInSeconds = 0;
                     if ($util.Long) {
-                        let long = new $util.Long(0, 0, false);
+                        var long = new $util.Long(0, 0, false);
                         object.refBlockNum = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                     } else
                         object.refBlockNum = options.longs === String ? "0" : 0;
                     if ($util.Long) {
-                        let long = new $util.Long(0, 0, false);
+                        var long = new $util.Long(0, 0, false);
                         object.refBlockPrefix = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                     } else
                         object.refBlockPrefix = options.longs === String ? "0" : 0;
@@ -11181,7 +11183,7 @@ export const protoc = $root.protoc = (() => {
          */
         function DotTx(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -11350,9 +11352,9 @@ export const protoc = $root.protoc = (() => {
         DotTx.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.DotTx();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.DotTx();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.value = reader.int64();
@@ -11469,7 +11471,7 @@ export const protoc = $root.protoc = (() => {
         DotTx.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.DotTx)
                 return object;
-            let message = new $root.protoc.DotTx();
+            var message = new $root.protoc.DotTx();
             if (object.value != null)
                 if ($util.Long)
                     (message.value = $util.Long.fromValue(object.value)).unsigned = false;
@@ -11563,47 +11565,47 @@ export const protoc = $root.protoc = (() => {
         DotTx.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.value = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.value = options.longs === String ? "0" : 0;
                 object.dest = "";
                 object.blockHash = "";
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.nonce = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.nonce = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.tip = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.tip = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.transactionVersion = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.transactionVersion = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.specVersion = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.specVersion = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.validityPeriod = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.validityPeriod = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.implVersion = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.implVersion = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.authoringVersion = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.authoringVersion = options.longs === String ? "0" : 0;
@@ -11701,7 +11703,7 @@ export const protoc = $root.protoc = (() => {
          */
         function KsmTx(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -11870,9 +11872,9 @@ export const protoc = $root.protoc = (() => {
         KsmTx.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.KsmTx();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.KsmTx();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.value = reader.int64();
@@ -11989,7 +11991,7 @@ export const protoc = $root.protoc = (() => {
         KsmTx.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.KsmTx)
                 return object;
-            let message = new $root.protoc.KsmTx();
+            var message = new $root.protoc.KsmTx();
             if (object.value != null)
                 if ($util.Long)
                     (message.value = $util.Long.fromValue(object.value)).unsigned = false;
@@ -12083,47 +12085,47 @@ export const protoc = $root.protoc = (() => {
         KsmTx.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.value = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.value = options.longs === String ? "0" : 0;
                 object.dest = "";
                 object.blockHash = "";
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.nonce = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.nonce = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.tip = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.tip = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.transactionVersion = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.transactionVersion = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.specVersion = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.specVersion = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.validityPeriod = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.validityPeriod = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.implVersion = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.implVersion = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    var long = new $util.Long(0, 0, false);
                     object.authoringVersion = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.authoringVersion = options.longs === String ? "0" : 0;
@@ -12220,7 +12222,7 @@ export const protoc = $root.protoc = (() => {
          */
         function CfxTx(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -12379,9 +12381,9 @@ export const protoc = $root.protoc = (() => {
         CfxTx.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.CfxTx();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.CfxTx();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.to = reader.string();
@@ -12476,7 +12478,7 @@ export const protoc = $root.protoc = (() => {
                 if (!$util.isString(message.contractAddress))
                     return "contractAddress: string expected";
             if (message.override != null && message.hasOwnProperty("override")) {
-                let error = $root.protoc.CfxTx.Override.verify(message.override);
+                var error = $root.protoc.CfxTx.Override.verify(message.override);
                 if (error)
                     return "override." + error;
             }
@@ -12494,7 +12496,7 @@ export const protoc = $root.protoc = (() => {
         CfxTx.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.CfxTx)
                 return object;
-            let message = new $root.protoc.CfxTx();
+            var message = new $root.protoc.CfxTx();
             if (object.to != null)
                 message.to = String(object.to);
             if (object.value != null)
@@ -12533,7 +12535,7 @@ export const protoc = $root.protoc = (() => {
         CfxTx.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.to = "";
                 object.value = "";
@@ -12602,7 +12604,7 @@ export const protoc = $root.protoc = (() => {
              */
             function Override(properties) {
                 if (properties)
-                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -12701,9 +12703,9 @@ export const protoc = $root.protoc = (() => {
             Override.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.CfxTx.Override();
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.CfxTx.Override();
                 while (reader.pos < end) {
-                    let tag = reader.uint32();
+                    var tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.decimals = reader.int32();
@@ -12778,7 +12780,7 @@ export const protoc = $root.protoc = (() => {
             Override.fromObject = function fromObject(object) {
                 if (object instanceof $root.protoc.CfxTx.Override)
                     return object;
-                let message = new $root.protoc.CfxTx.Override();
+                var message = new $root.protoc.CfxTx.Override();
                 if (object.decimals != null)
                     message.decimals = object.decimals | 0;
                 if (object.tokenShortName != null)
@@ -12802,7 +12804,7 @@ export const protoc = $root.protoc = (() => {
             Override.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                let object = {};
+                var object = {};
                 if (options.defaults) {
                     object.decimals = 0;
                     object.tokenShortName = "";
@@ -12858,7 +12860,7 @@ export const protoc = $root.protoc = (() => {
          */
         function SignMessage(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -12947,9 +12949,9 @@ export const protoc = $root.protoc = (() => {
         SignMessage.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.SignMessage();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.SignMessage();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.coinCode = reader.string();
@@ -13018,7 +13020,7 @@ export const protoc = $root.protoc = (() => {
         SignMessage.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.SignMessage)
                 return object;
-            let message = new $root.protoc.SignMessage();
+            var message = new $root.protoc.SignMessage();
             if (object.coinCode != null)
                 message.coinCode = String(object.coinCode);
             if (object.hdPath != null)
@@ -13040,7 +13042,7 @@ export const protoc = $root.protoc = (() => {
         SignMessage.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.coinCode = "";
                 object.hdPath = "";
@@ -13090,7 +13092,7 @@ export const protoc = $root.protoc = (() => {
          */
         function VerifyAddress(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -13179,9 +13181,9 @@ export const protoc = $root.protoc = (() => {
         VerifyAddress.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.VerifyAddress();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.VerifyAddress();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.coinType = reader.int32();
@@ -13250,7 +13252,7 @@ export const protoc = $root.protoc = (() => {
         VerifyAddress.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.VerifyAddress)
                 return object;
-            let message = new $root.protoc.VerifyAddress();
+            var message = new $root.protoc.VerifyAddress();
             if (object.coinType != null)
                 message.coinType = object.coinType | 0;
             if (object.addressIndex != null)
@@ -13272,7 +13274,7 @@ export const protoc = $root.protoc = (() => {
         VerifyAddress.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.coinType = 0;
                 object.addressIndex = 0;
@@ -13322,7 +13324,7 @@ export const protoc = $root.protoc = (() => {
          */
         function SignTransactionResult(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -13411,9 +13413,9 @@ export const protoc = $root.protoc = (() => {
         SignTransactionResult.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.SignTransactionResult();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.SignTransactionResult();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.signId = reader.string();
@@ -13482,7 +13484,7 @@ export const protoc = $root.protoc = (() => {
         SignTransactionResult.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.SignTransactionResult)
                 return object;
-            let message = new $root.protoc.SignTransactionResult();
+            var message = new $root.protoc.SignTransactionResult();
             if (object.signId != null)
                 message.signId = String(object.signId);
             if (object.txId != null)
@@ -13504,7 +13506,7 @@ export const protoc = $root.protoc = (() => {
         SignTransactionResult.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.signId = "";
                 object.txId = "";
@@ -13556,7 +13558,7 @@ export const protoc = $root.protoc = (() => {
          */
         function DashStaking(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -13665,9 +13667,9 @@ export const protoc = $root.protoc = (() => {
         DashStaking.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.DashStaking();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.DashStaking();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.coinCode = reader.string();
@@ -13748,7 +13750,7 @@ export const protoc = $root.protoc = (() => {
         DashStaking.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.DashStaking)
                 return object;
-            let message = new $root.protoc.DashStaking();
+            var message = new $root.protoc.DashStaking();
             if (object.coinCode != null)
                 message.coinCode = String(object.coinCode);
             if (object.hdPath != null)
@@ -13774,7 +13776,7 @@ export const protoc = $root.protoc = (() => {
         DashStaking.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.coinCode = "";
                 object.hdPath = "";
@@ -13828,7 +13830,7 @@ export const protoc = $root.protoc = (() => {
          */
         function Staking(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -13842,7 +13844,7 @@ export const protoc = $root.protoc = (() => {
         Staking.prototype.dash = null;
 
         // OneOf field names bound to virtual getters and setters
-        let $oneOfFields;
+        var $oneOfFields;
 
         /**
          * Staking data.
@@ -13911,9 +13913,9 @@ export const protoc = $root.protoc = (() => {
         Staking.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.Staking();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.protoc.Staking();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.dash = $root.protoc.DashStaking.decode(reader, reader.uint32());
@@ -13953,11 +13955,11 @@ export const protoc = $root.protoc = (() => {
         Staking.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            let properties = {};
+            var properties = {};
             if (message.dash != null && message.hasOwnProperty("dash")) {
                 properties.data = 1;
                 {
-                    let error = $root.protoc.DashStaking.verify(message.dash);
+                    var error = $root.protoc.DashStaking.verify(message.dash);
                     if (error)
                         return "dash." + error;
                 }
@@ -13976,7 +13978,7 @@ export const protoc = $root.protoc = (() => {
         Staking.fromObject = function fromObject(object) {
             if (object instanceof $root.protoc.Staking)
                 return object;
-            let message = new $root.protoc.Staking();
+            var message = new $root.protoc.Staking();
             if (object.dash != null) {
                 if (typeof object.dash !== "object")
                     throw TypeError(".protoc.Staking.dash: object expected");
@@ -13997,7 +13999,7 @@ export const protoc = $root.protoc = (() => {
         Staking.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (message.dash != null && message.hasOwnProperty("dash")) {
                 object.dash = $root.protoc.DashStaking.toObject(message.dash, options);
                 if (options.oneofs)
@@ -14023,4 +14025,4 @@ export const protoc = $root.protoc = (() => {
     return protoc;
 })();
 
-export { $root as default };
+module.exports = $root;
