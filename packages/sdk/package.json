@@ -1,6 +1,6 @@
 {
   "name": "@cvbb/sdk",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "Cobo Vault SDK",
   "author": "aaronisme <aarondongchen@gmail.com>",
   "homepage": "https://github.com/CoboVault/cobo-vault-blockchain-base#readme",
@@ -27,7 +27,7 @@
     "url": "https://github.com/CoboVault/cobo-vault-blockchain-base/issues"
   },
   "dependencies": {
-    "@cvbb/bc-ur": "^0.2.14",
+    "@cvbb/qr-protocol": "^2.0.4",
     "@types/qrcode.react": "^1.0.1",
     "@types/react-dom": "^17.0.1",
     "@types/react-modal": "^3.12.0",

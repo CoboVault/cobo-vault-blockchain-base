@@ -2,20 +2,24 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { interval } from 'rxjs';
 import { BaseQRCode } from '../components/BaseQRCode';
 import { Play } from '../types';
-import { encodeUR } from '@cvbb/bc-ur';
 import { EventEmitter } from 'events';
 import { Button } from '../components/Button';
 import { ButtonGroup } from '../components/ButtonGroup';
+import { UR } from '@cvbb/qr-protocol';
 
 export const useAnimatedQRCodePlayer = (): [JSX.Element, { play: Play }] => {
-    const [data, setData] = useState<string[]>([]);
+    const [data, setData] = useState<string>('');
+
     const [refreshSpeed, setRefreshSpeed] = useState(500);
     const [hasNext, setHasNext] = useState(false);
-    const [index, setIndex] = useState(0);
     const [title, setTitle] = useState<string | null>(null);
     const [description, setDescription] = useState<string | null>(null);
 
     const [isPause, setPause] = useState(false);
+
+    const urEncoder = useMemo(() => UR.encodeByUREncoder(Buffer.from(data, 'hex')), [data]);
+
+    const [qr, setQR] = useState<string>(urEncoder.nextPart());
 
     const pause = () => {
         setPause(true);
@@ -25,44 +29,22 @@ export const useAnimatedQRCodePlayer = (): [JSX.Element, { play: Play }] => {
         setPause(false);
     };
 
-    const next = () => {
-        setIndex((index) => {
-            if (index >= splitArray.length - 1) {
-                return 0;
-            } else {
-                return index + 1;
-            }
-        });
-    };
-
-    const prev = () => {
-        setIndex((index) => {
-            if (index < 0) {
-                return splitArray.length - 1;
-            } else {
-                return index - 1;
-            }
-        });
-    };
-
     const ee = useMemo(() => new EventEmitter(), []);
-    const splitArray = data;
     const reset = () => {
-        setData([]);
+        setData('');
         setRefreshSpeed(500);
-        setIndex(0);
     };
 
     useEffect(() => {
         if (!isPause) {
             const subscribe = interval(refreshSpeed).subscribe(() => {
-                next();
+                setQR(urEncoder.nextPart());
             });
             return () => {
                 subscribe.unsubscribe();
             };
         }
-    }, [refreshSpeed, splitArray, isPause]);
+    }, [refreshSpeed, isPause, urEncoder]);
 
     const finish = () => {
         ee.emit('finish', true);
@@ -78,14 +60,9 @@ export const useAnimatedQRCodePlayer = (): [JSX.Element, { play: Play }] => {
         >
             {title && <p>{title}</p>}
             {description && <p>{description}</p>}
-            <BaseQRCode size={288} data={splitArray[index]} />
-            <p style={{ textAlign: 'center' }}>
-                {index + 1}/{splitArray.length}
-            </p>
+            <BaseQRCode size={288} data={qr} />
             <ButtonGroup>
                 {isPause ? <Button onClick={play}>Play</Button> : <Button onClick={pause}>Pause</Button>}
-                <Button onClick={next}>Next</Button>
-                <Button onClick={prev}>Prev</Button>
             </ButtonGroup>
             <ButtonGroup>
                 <Button onClick={finish}>{hasNext ? 'Continue' : 'Finish'}</Button>
@@ -98,8 +75,7 @@ export const useAnimatedQRCodePlayer = (): [JSX.Element, { play: Play }] => {
         {
             play: (data, options) => {
                 return new Promise((resolve) => {
-                    const urs = encodeUR(data, 800);
-                    setData(urs);
+                    setData(data);
                     if (options) {
                         options.refreshSpeed && setRefreshSpeed(options.refreshSpeed);
                         options.hasNext && setHasNext(options.hasNext);
