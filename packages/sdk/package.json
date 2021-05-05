@@ -19,7 +19,7 @@
     "url": "git+https://github.com/CoboVault/cobo-vault-blockchain-base.git"
   },
   "scripts": {
-    "clean": "rm -rf ./dist",
+    "clean": "rimraf ./dist",
     "build": "npm run clean && npx tsc -p tsconfig.json -outDir ./dist",
     "build:watch": "npm run clean && npx tsc -w -p tsconfig.json -outDir ./dist"
   },
@@ -37,6 +37,7 @@
     "react-dom": "^17.0.1",
     "react-modal": "^3.12.1",
     "react-qr-reader": "^2.2.1",
+    "rimraf": "^3.0.2",
     "rxjs": "^6.6.3"
   },
   "publishConfig": {
