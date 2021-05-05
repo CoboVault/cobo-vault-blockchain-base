@@ -25,8 +25,9 @@
         "url": "git+https://github.com/CoboVault/cobo-vault-blockchain-base.git"
     },
     "scripts": {
-        "clean": "rm -rf ./dist",
-        "build": "npm run clean && npx tsc -p tsconfig.json -outDir ./dist",
+        "clean": "rimraf dist",
+        "build": "npm run clean && npx tsc -p tsconfig.json -outDir ./dist && npm run web-build",
+        "web-build": "browserify -p tinyify dist/index.js --standalone bcur > dist/web-bundle.js",
         "test": "jest"
     },
     "bugs": {
@@ -35,5 +36,10 @@
     "publishConfig": {
         "access": "public"
     },
-    "gitHead": "5afcf90b2b47d23aecfa56c73f6a0054da4cc8df"
+    "gitHead": "5afcf90b2b47d23aecfa56c73f6a0054da4cc8df",
+    "devDependencies": {
+        "browserify": "^17.0.0",
+        "rimraf": "^3.0.2",
+        "tinyify": "^3.0.0"
+    }
 }

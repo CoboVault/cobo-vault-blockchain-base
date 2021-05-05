@@ -9,3 +9,9 @@ const bcBech32 = require('@cvbb/bc-bech32');
 
 // TODO: DEMONSTRATE API
 ```
+
+## Usage in browser
+
+* Include `web-bundle.js` from the `dist` folder (either build yourself or grab from a CDN/node_modules)
+* library is now accessible under `window.bcbech32`
+* library is now accessible under `window.bcbech32`

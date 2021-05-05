@@ -55,7 +55,7 @@ const dealWithSingleWorkload = (workload: string, type = 'bytes'): string => {
 
 const dealWithMultipleWorkloads = (workloads: string[], type = 'bytes'): string => {
     const length = workloads.length;
-    const fragments = new Array(length).fill('');
+    const fragments = (new Array(length) as any).fill('');
     let digest = '';
     workloads.forEach((workload) => {
         const pieces = workload.split('/');

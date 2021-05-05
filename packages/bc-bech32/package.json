@@ -5,9 +5,14 @@
   "types": "src/index.ts",
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf ./dist",
-    "build": "npm run clean && npx tsc -p tsconfig.json -outDir ./dist",
-    "test": "jest"
+    "clean": "rimraf dist",
+    "build": "npm run clean && npx tsc -p tsconfig.json -outDir ./dist && npm run web-build",
+    "web-build": "browserify -p tinyify dist/index.js --standalone bcbech32 > dist/web-bundle.js"
+  },
+  "devDependencies": {
+    "browserify": "^17.0.0",
+    "rimraf": "^3.0.2",
+    "tinyify": "^3.0.0"
   },
   "files": [
     "src",

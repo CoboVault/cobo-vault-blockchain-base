@@ -3,11 +3,15 @@
   "private": true,
   "scripts": {
     "build": "lerna run build",
+	
+    "install": "lerna run install",
     "lint": "eslint '*/**/*.{js,ts}' --quiet --fix",
     "test": "jest"
   },
   "jest": {
-    "modulePathIgnorePatterns": ["__data__"]
+    "modulePathIgnorePatterns": [
+      "__data__"
+    ]
   },
   "devDependencies": {
     "@babel/preset-env": "^7.9.6",
